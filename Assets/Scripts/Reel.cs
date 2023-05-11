@@ -9,16 +9,22 @@ public class Reel : MonoBehaviour
     private int randomValue;
     //used to slow the movement of rows
     private float timeInterval;
+    //corresponding empty slot
     [SerializeField]
     private GameObject CorrespondingSlot;
 
     //슬롯간의 간격
     [SerializeField]
     private float slotInterval = 0.75f;
-    //가장 위의 슬롯 위치
+    //가장 위의 슬롯 로컬 위치
     private float lastSlotLocalPosY;
-    //가장 아래의 슬롯 위치
+    //가장 아래의 슬롯 로컬 위치
     private float fistSlotLocalPosY = 0;
+
+    // //가장 위의 슬롯 글로벌 위치
+    // private float lastSlotGlobalPosY;
+    // //가장 아래의 슬롯 글로벌 위치
+    // private float fistSlotGlobalPosY = 0;
 
     public bool reelStopped;
     public string stoppedReel;
@@ -33,15 +39,22 @@ public class Reel : MonoBehaviour
     void Start()
     {
         gameControl = GameObject.FindObjectOfType<GameControl>();
+        this.gameObject.transform.position = CorrespondingSlot.transform.position;
 
         //fortest
-        // RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Heal"));
-        // RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Attack"));
+        //RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Heal"));
+        //RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Attack"));
 
         reelStopped = true;
-        lastSlotLocalPosY = CorrespondingSlot.transform.position.y - slotInterval * (gameControl.reels.Length - 1);
-        Debug.Log("firstSlotYPos: " + fistSlotLocalPosY);
-        Debug.Log("lastSlotYPos: " + lastSlotLocalPosY);
+        lastSlotLocalPosY = slotInterval * (gameControl.reels.Length - 1);
+        // fistSlotGlobalPosY = CorrespondingSlot.transform.position.y;
+        // lastSlotGlobalPosY = fistSlotGlobalPosY - lastSlotLocalPosY;
+
+        Debug.Log("fistSlotLocalPosY: " + fistSlotLocalPosY);
+        Debug.Log("lastSlotLocalPosY: " + lastSlotLocalPosY);
+        // Debug.Log("fistSlotGlobalPosY: " + fistSlotGlobalPosY);
+        // Debug.Log("lastSlotGlobalPosY: " + lastSlotGlobalPosY);
+
         GameControl.OnSpinButtonClicked += StartRotating;
     }
 
@@ -64,14 +77,16 @@ public class Reel : MonoBehaviour
 
         for (int i = 0; i < 30; i++)
         {
-            if(transform.position.y <= lastSlotLocalPosY) {
-                transform.position = new Vector2(transform.position.x, fistSlotLocalPosY);
+            if(transform.position.y <= CorrespondingSlot.transform.position.y - lastSlotLocalPosY) {
+                transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
             }
 
             transform.position = new Vector2(transform.position.x, transform.position.y - slotInterval);
             yield return new WaitForSeconds(timeInterval);
         }
 
+        #region randomizeResults
+        /*
         randomValue = UnityEngine.Random.Range(60, 100);
 
         //correcting random value
@@ -89,8 +104,8 @@ public class Reel : MonoBehaviour
 
         for (int i = 0; i < randomValue; i++)
         {
-            if(transform.position.y <= lastSlotLocalPosY) {
-                transform.position = new Vector2(transform.position.x, fistSlotLocalPosY);
+            if(transform.position.y <= CorrespondingSlot.transform.position.y - lastSlotLocalPosY) {
+                transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
             }
 
             transform.position = new Vector2(transform.position.x, transform.position.y - slotInterval);
@@ -102,6 +117,8 @@ public class Reel : MonoBehaviour
 
             yield return new WaitForSeconds(timeInterval);
         }
+        */
+        #endregion
 
         //customization needed
         if(transform.position.y == lastSlotLocalPosY) {
@@ -138,6 +155,10 @@ public class Reel : MonoBehaviour
         //Debug.Log(this.gameObject.name + " has " + slotItems.Length + " slot items");
 
         return slotItems.Length;
+    }
+
+    private void UpdateSlotPosY() {
+
     }
 
     private void OnDestroy() {
