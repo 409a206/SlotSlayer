@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class GameControl : MonoBehaviour
 {
-    public static event Action HandlePulled = delegate {};
+    public static event Action OnSpinButtonClicked = delegate {};
 
     // [SerializeField]
     // private Text prizeText;
     [SerializeField]
-    private Reel[] reels;
+    public Reel[] reels;
 
     // [SerializeField]
     // private Transform handle;
@@ -47,7 +47,7 @@ public class GameControl : MonoBehaviour
     private void OnMouseDown() {
         //Debug.Log("OnMouseDown Called");
         if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped) {
-            HandlePulled();
+            OnSpinButtonClicked();
             // Debug.Log("HandlePulled Delegate Called");
         }
     }

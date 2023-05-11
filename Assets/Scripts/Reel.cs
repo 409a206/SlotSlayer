@@ -11,21 +11,37 @@ public class Reel : MonoBehaviour
     private float timeInterval;
     [SerializeField]
     private GameObject CorrespondingSlot;
+
+    //슬롯간의 간격
     [SerializeField]
     private float slotInterval = 0.75f;
+    //가장 위의 슬롯 위치
     private float lastSlotYPos;
+    //가장 아래의 슬롯 위치
     private float firstSlotYPos;
 
     public bool reelStopped;
     public string stoppedReel;
+
+    [SerializeField]
+    private GameControl gameControl;
+
+    [SerializeField]
+    private List<SlotItem> slotItems;
+
     // Start is called before the first frame update
     void Start()
     {
+        gameControl = GameObject.FindObjectOfType<GameControl>();
+
+        //fortest
+        // RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Heal"));
+        // RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Attack"));
+
         reelStopped = true;
         firstSlotYPos = CorrespondingSlot.transform.position.y;
-        //the number needs to be changed!!
-        lastSlotYPos = CorrespondingSlot.transform.position.y - slotInterval * 3;
-        GameControl.HandlePulled += StartRotating;
+        lastSlotYPos = CorrespondingSlot.transform.position.y - slotInterval * (gameControl.reels.Length - 1);
+        GameControl.OnSpinButtonClicked += StartRotating;
     }
 
 
@@ -88,7 +104,7 @@ public class Reel : MonoBehaviour
 
         //customization needed
         if(transform.position.y == lastSlotYPos) {
-            Debug.Log("Diamond");
+            //Debug.Log("Diamond");
             stoppedReel = "diamond";
         } else if(transform.position.y == 1.75f) {
             stoppedReel = "wefwef";
@@ -98,7 +114,32 @@ public class Reel : MonoBehaviour
 
     }
 
+    //slotItem 등록
+    private void RegisterSlotItem(SlotItem slotItem) {
+        
+        int slotItemCount = CountSlotItems();
+
+        Vector3 SlotItemRegisterPosition = new Vector3(0, slotItemCount * slotInterval, 0);
+
+        slotItems.Add(slotItem);
+
+        SlotItem instantiatedSlotItem = Instantiate(slotItem, new Vector3(), Quaternion.identity);
+        instantiatedSlotItem.transform.parent = this.gameObject.transform;
+        instantiatedSlotItem.transform.localPosition = SlotItemRegisterPosition;
+
+    }
+
+    //Reel에 등록되어있는 slotItem 갯수 카운트 
+    private int CountSlotItems() {
+
+        SlotItem[] slotItems = this.gameObject.GetComponentsInChildren<SlotItem>();
+
+        //Debug.Log(this.gameObject.name + " has " + slotItems.Length + " slot items");
+
+        return slotItems.Length;
+    }
+
     private void OnDestroy() {
-        GameControl.HandlePulled -= StartRotating;
+        GameControl.OnSpinButtonClicked -= StartRotating;
     }
 }
