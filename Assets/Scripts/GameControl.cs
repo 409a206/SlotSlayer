@@ -8,14 +8,8 @@ public class GameControl : MonoBehaviour
 {
     public static event Action OnSpinButtonClicked = delegate {};
 
-    // [SerializeField]
-    // private Text prizeText;
     [SerializeField]
     public Reel[] reels;
-
-    // [SerializeField]
-    // private Transform handle;
-    private int prizeValue;
 
     //this variable is so that it does not check the results multiple times when row stops spinning
     private bool resultsChecked = true;
@@ -29,16 +23,14 @@ public class GameControl : MonoBehaviour
     void CheckRows(){
         //모든 row들이 멈출때까지 기다리기
         if(!reels[0].reelStopped || !reels[1].reelStopped || !reels[2].reelStopped) {
-            //prizeValue = 0;
-            //prizeText.enabled = false;
+
             resultsChecked = false;
         }
 
         //모든 row들이 멈췄고 아직 result가 체크되지 않았다면
         if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && !resultsChecked) {
             CheckResults();
-            // prizeText.enabled = true;
-            // prizeText.text = "Prize: " + prizeValue;
+    
         }
     }
 
@@ -51,22 +43,6 @@ public class GameControl : MonoBehaviour
             // Debug.Log("HandlePulled Delegate Called");
         }
     }
-
-    //obsolete
-    // private IEnumerator PullHandle() {
-
-    //     for(int i = 0; i < 15; i += 5) {
-    //         handle.Rotate(0f,0f,i);
-    //         yield return new WaitForSeconds(0.1f);
-    //     }
-
-    //     HandlePulled();
-
-    //      for(int i = 0; i < 15; i += 5) {
-    //         handle.Rotate(0f,0f,-i);
-    //         yield return new WaitForSeconds(0.1f);
-    //     }
-    // }
 
     //바꿔야함
     private void CheckResults()
@@ -118,7 +94,7 @@ public class GameControl : MonoBehaviour
 
         // }
         #endregion
-
+        
         resultsChecked = true;
     }
 }

@@ -16,9 +16,9 @@ public class Reel : MonoBehaviour
     [SerializeField]
     private float slotInterval = 0.75f;
     //가장 위의 슬롯 위치
-    private float lastSlotYPos;
+    private float lastSlotLocalPosY;
     //가장 아래의 슬롯 위치
-    private float firstSlotYPos;
+    private float fistSlotLocalPosY = 0;
 
     public bool reelStopped;
     public string stoppedReel;
@@ -39,8 +39,9 @@ public class Reel : MonoBehaviour
         // RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Attack"));
 
         reelStopped = true;
-        firstSlotYPos = CorrespondingSlot.transform.position.y;
-        lastSlotYPos = CorrespondingSlot.transform.position.y - slotInterval * (gameControl.reels.Length - 1);
+        lastSlotLocalPosY = CorrespondingSlot.transform.position.y - slotInterval * (gameControl.reels.Length - 1);
+        Debug.Log("firstSlotYPos: " + fistSlotLocalPosY);
+        Debug.Log("lastSlotYPos: " + lastSlotLocalPosY);
         GameControl.OnSpinButtonClicked += StartRotating;
     }
 
@@ -63,8 +64,8 @@ public class Reel : MonoBehaviour
 
         for (int i = 0; i < 30; i++)
         {
-            if(transform.position.y <= lastSlotYPos) {
-                transform.position = new Vector2(transform.position.x, firstSlotYPos);
+            if(transform.position.y <= lastSlotLocalPosY) {
+                transform.position = new Vector2(transform.position.x, fistSlotLocalPosY);
             }
 
             transform.position = new Vector2(transform.position.x, transform.position.y - slotInterval);
@@ -88,8 +89,8 @@ public class Reel : MonoBehaviour
 
         for (int i = 0; i < randomValue; i++)
         {
-            if(transform.position.y <= lastSlotYPos) {
-                transform.position = new Vector2(transform.position.x, firstSlotYPos);
+            if(transform.position.y <= lastSlotLocalPosY) {
+                transform.position = new Vector2(transform.position.x, fistSlotLocalPosY);
             }
 
             transform.position = new Vector2(transform.position.x, transform.position.y - slotInterval);
@@ -103,7 +104,7 @@ public class Reel : MonoBehaviour
         }
 
         //customization needed
-        if(transform.position.y == lastSlotYPos) {
+        if(transform.position.y == lastSlotLocalPosY) {
             //Debug.Log("Diamond");
             stoppedReel = "diamond";
         } else if(transform.position.y == 1.75f) {
