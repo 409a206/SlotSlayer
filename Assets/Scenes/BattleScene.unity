@@ -318,7 +318,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &177393350
 GameObject:
@@ -504,7 +504,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384910102}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.89, y: -3.14, z: 0}
+  m_LocalPosition: {x: -0.89, y: -3.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1950439480}
@@ -525,9 +525,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8011ce55f75403644bf8958ae0a9aecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotInterval: 0.25
-  lastSlotYPos: -3.5
-  firstSlotYPos: 1.75
+  CorrespondingSlot: {fileID: 569974743}
+  slotInterval: 0.75
   reelStopped: 0
   stoppedReel: 
 --- !u!1 &428830513
@@ -870,7 +869,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &750623015
 GameObject:
@@ -1511,9 +1510,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8011ce55f75403644bf8958ae0a9aecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CorrespondingSlot: {fileID: 0}
   slotInterval: 0.25
-  lastSlotYPos: -5.78
-  firstSlotYPos: -0.51
   reelStopped: 0
   stoppedReel: 
 --- !u!1 &1269352150
@@ -1562,9 +1560,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8011ce55f75403644bf8958ae0a9aecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotInterval: 0.25
-  lastSlotYPos: -3.5
-  firstSlotYPos: 1.75
+  CorrespondingSlot: {fileID: 826591224}
+  slotInterval: 0.75
   reelStopped: 0
   stoppedReel: 
 --- !u!1 &1312604278
@@ -1992,9 +1989,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8011ce55f75403644bf8958ae0a9aecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CorrespondingSlot: {fileID: 0}
   slotInterval: 0.25
-  lastSlotYPos: -5.78
-  firstSlotYPos: -0.51
   reelStopped: 0
   stoppedReel: 
 --- !u!1 &1476687524
@@ -2325,9 +2321,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8011ce55f75403644bf8958ae0a9aecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotInterval: 0.25
-  lastSlotYPos: -3.5
-  firstSlotYPos: 1.75
+  CorrespondingSlot: {fileID: 1476687524}
+  slotInterval: 0.75
   reelStopped: 0
   stoppedReel: 
 --- !u!1 &1769770729
@@ -2440,7 +2435,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2084381819
 GameObject:
@@ -2619,8 +2614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8011ce55f75403644bf8958ae0a9aecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CorrespondingSlot: {fileID: 0}
   slotInterval: 0.25
-  lastSlotYPos: -5.78
-  firstSlotYPos: -0.51
   reelStopped: 0
   stoppedReel: 

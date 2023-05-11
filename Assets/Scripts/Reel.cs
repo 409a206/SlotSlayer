@@ -10,11 +10,11 @@ public class Reel : MonoBehaviour
     //used to slow the movement of rows
     private float timeInterval;
     [SerializeField]
-    private float slotInterval = 0.25f;
+    private GameObject CorrespondingSlot;
     [SerializeField]
-    private float lastSlotYPos = -3.5f;
-    [SerializeField]
-    private float firstSlotYPos = 1.75f;
+    private float slotInterval = 0.75f;
+    private float lastSlotYPos;
+    private float firstSlotYPos;
 
     public bool reelStopped;
     public string stoppedReel;
@@ -22,6 +22,9 @@ public class Reel : MonoBehaviour
     void Start()
     {
         reelStopped = true;
+        firstSlotYPos = CorrespondingSlot.transform.position.y;
+        //the number needs to be changed!!
+        lastSlotYPos = CorrespondingSlot.transform.position.y - slotInterval * 3;
         GameControl.HandlePulled += StartRotating;
     }
 
