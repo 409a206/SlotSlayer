@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Row : MonoBehaviour
+public class Reel : MonoBehaviour
 {   
     //hold number of rotation steps
     private int randomValue;
@@ -16,12 +16,12 @@ public class Row : MonoBehaviour
     [SerializeField]
     private float firstSlotYPos = 1.75f;
 
-    public bool rowStopped;
-    public string stoppedSlot;
+    public bool reelStopped;
+    public string stoppedReel;
     // Start is called before the first frame update
     void Start()
     {
-        rowStopped = true;
+        reelStopped = true;
         GameControl.HandlePulled += StartRotating;
     }
 
@@ -33,13 +33,13 @@ public class Row : MonoBehaviour
     }
     private void StartRotating()
     {
-        stoppedSlot = "";
+        stoppedReel = "";
         StartCoroutine("Rotate");
     }
 
     private IEnumerator Rotate() {
 
-        rowStopped = false;
+        reelStopped = false;
         timeInterval = 0.025f;
 
         for (int i = 0; i < 30; i++)
@@ -86,12 +86,12 @@ public class Row : MonoBehaviour
         //customization needed
         if(transform.position.y == lastSlotYPos) {
             Debug.Log("Diamond");
-            stoppedSlot = "diamond";
+            stoppedReel = "diamond";
         } else if(transform.position.y == 1.75f) {
-            stoppedSlot = "wefwef";
+            stoppedReel = "wefwef";
         }
 
-        rowStopped = true;
+        reelStopped = true;
 
     }
 
