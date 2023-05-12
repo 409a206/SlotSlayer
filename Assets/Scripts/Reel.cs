@@ -41,14 +41,15 @@ public class Reel : MonoBehaviour
         gameControl = GameObject.FindObjectOfType<GameControl>();
         this.gameObject.transform.position = CorrespondingSlot.transform.position;
 
-        //fortest
-        //RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Heal"));
-        //RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Attack"));
 
         reelStopped = true;
-        lastSlotLocalPosY = slotInterval * (gameControl.reels.Length - 1);
+        lastSlotLocalPosY = slotInterval * (slotItems.Count - 1);
         // fistSlotGlobalPosY = CorrespondingSlot.transform.position.y;
         // lastSlotGlobalPosY = fistSlotGlobalPosY - lastSlotLocalPosY;
+
+        //fortest
+        RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Heal"));
+        RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Attack"));
 
         Debug.Log("fistSlotLocalPosY: " + fistSlotLocalPosY);
         Debug.Log("lastSlotLocalPosY: " + lastSlotLocalPosY);
@@ -73,15 +74,18 @@ public class Reel : MonoBehaviour
     private IEnumerator Rotate() {
 
         reelStopped = false;
-        timeInterval = 0.025f;
+        //timeInterval = 0.025f;
+        timeInterval = 1.0f;
 
         for (int i = 0; i < 30; i++)
         {
+
+            transform.position = new Vector2(transform.position.x, transform.position.y - slotInterval);
+
             if(transform.position.y <= CorrespondingSlot.transform.position.y - lastSlotLocalPosY) {
                 transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
             }
 
-            transform.position = new Vector2(transform.position.x, transform.position.y - slotInterval);
             yield return new WaitForSeconds(timeInterval);
         }
 
@@ -145,6 +149,8 @@ public class Reel : MonoBehaviour
         instantiatedSlotItem.transform.parent = this.gameObject.transform;
         instantiatedSlotItem.transform.localPosition = SlotItemRegisterPosition;
 
+        UpdateSlotData();
+
     }
 
     //Reel에 등록되어있는 slotItem 갯수 카운트 
@@ -152,13 +158,15 @@ public class Reel : MonoBehaviour
 
         SlotItem[] slotItems = this.gameObject.GetComponentsInChildren<SlotItem>();
 
-        //Debug.Log(this.gameObject.name + " has " + slotItems.Length + " slot items");
+        Debug.Log(this.gameObject.name + " has " + slotItems.Length + " slot items");
 
         return slotItems.Length;
     }
 
-    private void UpdateSlotPosY() {
-
+    private void UpdateSlotData() {
+        lastSlotLocalPosY = slotInterval * (slotItems.Count - 1);
+        Debug.Log("slotItems.Count: " + slotItems.Count);
+        Debug.Log("lastSlotLocalPosY: " + lastSlotLocalPosY);
     }
 
     private void OnDestroy() {
