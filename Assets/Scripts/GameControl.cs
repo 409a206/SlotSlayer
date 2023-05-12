@@ -6,19 +6,13 @@ using UnityEngine.UI;
 
 public class GameControl : MonoBehaviour
 {
-    public static event Action HandlePulled = delegate {};
+    public static event Action OnSpinButtonClicked = delegate {};
 
-    // [SerializeField]
-    // private Text prizeText;
     [SerializeField]
-    private Row[] rows;
-
-    // [SerializeField]
-    // private Transform handle;
-    private int prizeValue;
+    public Reel[] reels;
 
     //this variable is so that it does not check the results multiple times when row stops spinning
-    private bool resultsChecked = false;
+    private bool resultsChecked = true;
 
     // Update is called once per frame
     void Update()
@@ -28,92 +22,78 @@ public class GameControl : MonoBehaviour
 
     void CheckRows(){
         //모든 row들이 멈출때까지 기다리기
-        if(!rows[0].rowStopped || !rows[1].rowStopped || !rows[2].rowStopped) {
-            //prizeValue = 0;
-            //prizeText.enabled = false;
+        if(!reels[0].reelStopped || !reels[1].reelStopped || !reels[2].reelStopped) {
+
             resultsChecked = false;
         }
 
         //모든 row들이 멈췄고 아직 result가 체크되지 않았다면
-        if(rows[0].rowStopped && rows[1].rowStopped && rows[2].rowStopped && !resultsChecked) {
+        if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && !resultsChecked) {
             CheckResults();
-            // prizeText.enabled = true;
-            // prizeText.text = "Prize: " + prizeValue;
+    
         }
     }
 
     //also works with finger touches
     //mobile touch recommended for more complicated uses
     private void OnMouseDown() {
-        Debug.Log("OnMouseDown Called");
-        if(rows[0].rowStopped && rows[1].rowStopped && rows[2].rowStopped) {
-            HandlePulled();
+        
+        if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped) {
+            OnSpinButtonClicked();
         }
     }
 
-    //obsolete
-    // private IEnumerator PullHandle() {
-
-    //     for(int i = 0; i < 15; i += 5) {
-    //         handle.Rotate(0f,0f,i);
-    //         yield return new WaitForSeconds(0.1f);
-    //     }
-
-    //     HandlePulled();
-
-    //      for(int i = 0; i < 15; i += 5) {
-    //         handle.Rotate(0f,0f,-i);
-    //         yield return new WaitForSeconds(0.1f);
-    //     }
-    // }
-
+    //바꿔야함
     private void CheckResults()
     {
-        //바꿔야함
-        if(rows[0].stoppedSlot == "Diamond"
-           && rows[1].stoppedSlot == "Diamond"
-           && rows[2].stoppedSlot == "Diamond") {
+       Debug.Log("CheckResults Called");
 
-            prizeValue = 200;
+       #region Example
+        // if(rows[0].stoppedSlot == "Diamond"
+        //    && rows[1].stoppedSlot == "Diamond"
+        //    && rows[2].stoppedSlot == "Diamond") {
 
-        } else if(rows[0].stoppedSlot == "Crown"
-                  && rows[1].stoppedSlot == "Crown"
-                  && rows[2].stoppedSlot == "Crown") {
+        //     prizeValue = 200;
 
-                  prizeValue = 400;
+        // } else if(rows[0].stoppedSlot == "Crown"
+        //           && rows[1].stoppedSlot == "Crown"
+        //           && rows[2].stoppedSlot == "Crown") {
 
-        } else if(rows[0].stoppedSlot == "Melon"
-                  && rows[1].stoppedSlot == "Melon"
-                  && rows[2].stoppedSlot == "Melon") {
+        //           prizeValue = 400;
 
-                  prizeValue = 600;
+        // } else if(rows[0].stoppedSlot == "Melon"
+        //           && rows[1].stoppedSlot == "Melon"
+        //           && rows[2].stoppedSlot == "Melon") {
 
-        } else if(rows[0].stoppedSlot == "Bar"
-                  && rows[1].stoppedSlot == "Bar"
-                  && rows[2].stoppedSlot == "Bar") {
+        //           prizeValue = 600;
 
-                  prizeValue = 800;
+        // } else if(rows[0].stoppedSlot == "Bar"
+        //           && rows[1].stoppedSlot == "Bar"
+        //           && rows[2].stoppedSlot == "Bar") {
 
-        } else if(rows[0].stoppedSlot == "Seven"
-                  && rows[1].stoppedSlot == "Seven"
-                  && rows[2].stoppedSlot == "Seven") {
+        //           prizeValue = 800;
 
-                  prizeValue = 1500;
+        // } else if(rows[0].stoppedSlot == "Seven"
+        //           && rows[1].stoppedSlot == "Seven"
+        //           && rows[2].stoppedSlot == "Seven") {
 
-        } else if(rows[0].stoppedSlot == "Cherry"
-                  && rows[1].stoppedSlot == "Cherry"
-                  && rows[2].stoppedSlot == "Cherry") {
+        //           prizeValue = 1500;
 
-                  prizeValue = 3000;
+        // } else if(rows[0].stoppedSlot == "Cherry"
+        //           && rows[1].stoppedSlot == "Cherry"
+        //           && rows[2].stoppedSlot == "Cherry") {
 
-        } else if(rows[0].stoppedSlot == "Lemon"
-                  && rows[1].stoppedSlot == "Lemon"
-                  && rows[2].stoppedSlot == "Lemon") {
+        //           prizeValue = 3000;
 
-                  prizeValue = 5000;
+        // } else if(rows[0].stoppedSlot == "Lemon"
+        //           && rows[1].stoppedSlot == "Lemon"
+        //           && rows[2].stoppedSlot == "Lemon") {
 
-        }
+        //           prizeValue = 5000;
 
+        // }
+        #endregion
+        
         resultsChecked = true;
     }
 }
