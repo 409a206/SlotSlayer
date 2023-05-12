@@ -37,10 +37,9 @@ public class GameControl : MonoBehaviour
     //also works with finger touches
     //mobile touch recommended for more complicated uses
     private void OnMouseDown() {
-        //Debug.Log("OnMouseDown Called");
+        
         if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped) {
             OnSpinButtonClicked();
-            // Debug.Log("HandlePulled Delegate Called");
         }
     }
 

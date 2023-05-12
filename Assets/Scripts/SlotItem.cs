@@ -5,16 +5,19 @@ using UnityEngine;
 public class SlotItem : MonoBehaviour
 {
     [SerializeField]
-    private string name;
+    private string slotItemName;
+
+    public string SlotItemName {
+        get {return slotItemName;}
+        set {slotItemName = value;}
+    }
+
     [SerializeField]
     private string code;
-
     
-    private Vector2 _position;
-
     void Start()
     {
-        _position = this.transform.position;
+       
     }
 
     // Update is called once per frame
