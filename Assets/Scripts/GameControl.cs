@@ -14,10 +14,13 @@ public class GameControl : MonoBehaviour
     //this variable is so that it does not check the results multiple times when row stops spinning
     private bool resultsChecked = true;
 
+    BattleManager battleManager;
+
     // Update is called once per frame
     void Update()
     {
-        CheckRows();   
+        CheckRows();
+        battleManager = FindObjectOfType<BattleManager>(); 
     }
 
     void CheckRows(){
@@ -28,7 +31,7 @@ public class GameControl : MonoBehaviour
         }
 
         //모든 row들이 멈췄고 아직 result가 체크되지 않았다면
-        if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && !resultsChecked) {
+        if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && !resultsChecked /*&&  battleManager.currentBattleState == BattleState.PLAYERTURN */) {
             CheckResults();
     
         }
@@ -37,7 +40,6 @@ public class GameControl : MonoBehaviour
     //also works with finger touches
     //mobile touch recommended for more complicated uses
     private void OnMouseDown() {
-        
         if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped) {
             OnSpinButtonClicked();
         }
