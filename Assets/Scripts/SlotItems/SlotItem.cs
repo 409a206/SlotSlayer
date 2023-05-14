@@ -11,6 +11,7 @@ public class SlotItem : MonoBehaviour
         get {return slotItemName;}
         set {slotItemName = value;}
     }
+    
     [SerializeField]
     private string code;
     
