@@ -23,6 +23,8 @@ public class BattleManager : MonoBehaviour
     
 	Unit playerUnit;
 	Unit enemyUnit;
+	
+	[HideInInspector]
     public BattleState state;
 
 
