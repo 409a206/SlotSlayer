@@ -74,7 +74,7 @@ public class Reel : MonoBehaviour
     private void StartRotating()
     {
      stoppedRow = "";
-        StartCoroutine("Rotate");
+     StartCoroutine("Rotate");
     }
 
     private IEnumerator Rotate() {

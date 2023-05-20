@@ -14,7 +14,8 @@ public class GameControl : MonoBehaviour
     //this variable is so that it does not check the results multiple times when row stops spinning
     private bool resultsChecked = true;
 
-    BattleManager battleManager;
+    [HideInInspector]
+    public BattleManager battleManager;
 
     // Update is called once per frame
     void Update()
@@ -31,9 +32,9 @@ public class GameControl : MonoBehaviour
         }
 
         //모든 row들이 멈췄고 아직 result가 체크되지 않았다면
-        if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && !resultsChecked /*&&  battleManager.currentBattleState == BattleState.PLAYERTURN */) {
+        if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && !resultsChecked &&  battleManager.currentBattleState == BattleState.SPINNING ) {
             CheckResults();
-    
+            battleManager.currentBattleState = BattleState.PLAYERACTION;
         }
     }
 
@@ -42,6 +43,7 @@ public class GameControl : MonoBehaviour
     private void OnMouseDown() {
         if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped) {
             OnSpinButtonClicked();
+            battleManager.currentBattleState = BattleState.SPINNING;
         }
     }
 
