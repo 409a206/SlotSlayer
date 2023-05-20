@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public enum BattleState { START, PLAYERREADY, SPINNING, PLAYERACTION, ENEMYTURN, WON, LOST }
 
@@ -18,7 +19,7 @@ public class BattleManager : MonoBehaviour
 	public Transform playerBattleStation;
 	public Transform enemyBattleStation;
     
-	public Text dialogueText;
+	public TMP_Text dialogueText;
 
     
 	Unit playerUnit;
@@ -43,7 +44,7 @@ public class BattleManager : MonoBehaviour
 		GameObject enemyGO = Instantiate(enemyPrefab, enemyBattleStation);
 		enemyUnit = enemyGO.GetComponent<Unit>();
 
-		// dialogueText.text = "A wild " + enemyUnit.unitName + " approaches...";
+		dialogueText.text = "A wild " + enemyUnit.unitName + " approaches...";
 
 		playerHUD.SetHUD(playerUnit);
 		enemyHUD.SetHUD(enemyUnit);
