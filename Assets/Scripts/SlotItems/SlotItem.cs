@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Scriptable Object로 추후 변경 필요!!
 public class SlotItem : MonoBehaviour
 {
     [SerializeField]
@@ -11,7 +12,7 @@ public class SlotItem : MonoBehaviour
         get {return slotItemName;}
         set {slotItemName = value;}
     }
-    
+
     [SerializeField]
     private string code;
     

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class SlotManager : MonoBehaviour
 {
     public static event Action OnSpinButtonClicked = delegate {};
+    public static event Func<SlotItem> OnSpinStopped;
 
     [SerializeField]
     public Reel[] reels;
@@ -33,8 +34,9 @@ public class SlotManager : MonoBehaviour
 
         //모든 row들이 멈췄고 아직 result가 체크되지 않았다면
         if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && !resultsChecked &&  gameManager.battleManager.currentBattleState == BattleState.SPINNING ) {
-            CheckResults();
+            //CheckResults();
             gameManager.battleManager.currentBattleState = BattleState.PLAYERACTION;
+            OnSpinStopped?.Invoke();
         }
     }
 
@@ -42,8 +44,8 @@ public class SlotManager : MonoBehaviour
     //mobile touch recommended for more complicated uses
     private void OnMouseDown() {
         if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && gameManager.battleManager.currentBattleState == BattleState.PLAYERREADY) {
-            OnSpinButtonClicked();
             gameManager.battleManager.currentBattleState = BattleState.SPINNING;
+            OnSpinButtonClicked?.Invoke();
         }
     }
 
