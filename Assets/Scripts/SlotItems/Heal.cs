@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Heal : SlotItem
 {
-    public void HealPlayer() {
-        Debug.Log("HEAL!!");
+    public override void Activate() {
+        HealPlayer();
+    }
+    private void HealPlayer() {
+        slotManager.gameManager.battleManager.Heal();
     }
 }

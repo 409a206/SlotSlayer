@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Defend : SlotItem
 {
-   public void DefendPlayer() {
-    Debug.Log("Defend!");
+   public override void Activate() {
+        DefendPlayer();
+   }
+   private void DefendPlayer() {
+      slotManager.gameManager.battleManager.Defend();
    }
 }

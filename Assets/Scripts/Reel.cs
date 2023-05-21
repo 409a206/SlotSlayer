@@ -56,8 +56,8 @@ public class Reel : MonoBehaviour
         RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Heal"));
         RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Attack"));
 
-        Debug.Log("fistSlotLocalPosY: " + fistSlotLocalPosY);
-        Debug.Log("lastSlotLocalPosY: " + lastSlotLocalPosY);
+        // Debug.Log("fistSlotLocalPosY: " + fistSlotLocalPosY);
+        // Debug.Log("lastSlotLocalPosY: " + lastSlotLocalPosY);
         // Debug.Log("fistSlotGlobalPosY: " + fistSlotGlobalPosY);
         // Debug.Log("lastSlotGlobalPosY: " + lastSlotGlobalPosY);
 
@@ -133,7 +133,7 @@ public class Reel : MonoBehaviour
         
         #endregion
         
-        SlotManager.OnSpinStopped += CalculateStoppedRow;
+        CalculateStoppedRow();
 
         reelStopped = true;
 
@@ -161,7 +161,10 @@ public class Reel : MonoBehaviour
         
         stoppedRow = stoppedSlotItem?.SlotItemName ?? "Null";
         
-        Debug.Log(this.name + " stoppedRow: " + stoppedRow);
+        //Debug.Log(this.name + " stoppedRow: " + stoppedRow);
+
+        //Registering to delegate 'OnSpinStopped' functions to activate
+        SlotManager.OnSpinStopped += stoppedSlotItem.Activate;
 
         return stoppedSlotItem;
     }

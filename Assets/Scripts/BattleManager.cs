@@ -132,19 +132,16 @@ public class BattleManager : MonoBehaviour
 		StartCoroutine(EnemyTurn());
 	}
 
-	public void OnAttackButton()
+	public void Attack()
 	{
-		if (state != BattleState.PLAYERREADY)
-			return;
-
 		StartCoroutine(PlayerAttack());
 	}
 
-	public void OnHealButton()
+	public void Heal()
 	{
-		if (state != BattleState.PLAYERREADY)
-			return;
-
 		StartCoroutine(PlayerHeal());
+	}
+	public void Defend() {
+		Debug.Log("Defend!");
 	}
 }

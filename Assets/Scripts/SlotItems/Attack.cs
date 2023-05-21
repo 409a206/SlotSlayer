@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Attack : SlotItem
 {
+    public override void Activate() {
+        AttackEnemy();
+    }
     public void AttackEnemy() {
-        Debug.Log("Attack!!");
+        slotManager.gameManager.battleManager.Attack();
     }
 }

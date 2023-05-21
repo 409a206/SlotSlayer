@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class SlotManager : MonoBehaviour
 {
     public static event Action OnSpinButtonClicked = delegate {};
-    public static event Func<SlotItem> OnSpinStopped;
+    public static event Action OnSpinStopped;
 
     [SerializeField]
     public Reel[] reels;
@@ -33,73 +33,19 @@ public class SlotManager : MonoBehaviour
         }
 
         //모든 row들이 멈췄고 아직 result가 체크되지 않았다면
-        if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && !resultsChecked &&  gameManager.battleManager.currentBattleState == BattleState.SPINNING ) {
-            //CheckResults();
+        if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && !resultsChecked) {
+            resultsChecked = true;
             gameManager.battleManager.currentBattleState = BattleState.PLAYERACTION;
             OnSpinStopped?.Invoke();
         }
     }
 
     //also works with finger touches
-    //mobile touch recommended for more complicated uses
+    //mobile touch function is recommended for more complicated uses
     private void OnMouseDown() {
         if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && gameManager.battleManager.currentBattleState == BattleState.PLAYERREADY) {
             gameManager.battleManager.currentBattleState = BattleState.SPINNING;
             OnSpinButtonClicked?.Invoke();
         }
-    }
-
-    //바꿔야함
-    private void CheckResults()
-    {
-       Debug.Log("CheckResults Called");
-
-       #region Example
-        // if(rows[0].stoppedSlot == "Diamond"
-        //    && rows[1].stoppedSlot == "Diamond"
-        //    && rows[2].stoppedSlot == "Diamond") {
-
-        //     prizeValue = 200;
-
-        // } else if(rows[0].stoppedSlot == "Crown"
-        //           && rows[1].stoppedSlot == "Crown"
-        //           && rows[2].stoppedSlot == "Crown") {
-
-        //           prizeValue = 400;
-
-        // } else if(rows[0].stoppedSlot == "Melon"
-        //           && rows[1].stoppedSlot == "Melon"
-        //           && rows[2].stoppedSlot == "Melon") {
-
-        //           prizeValue = 600;
-
-        // } else if(rows[0].stoppedSlot == "Bar"
-        //           && rows[1].stoppedSlot == "Bar"
-        //           && rows[2].stoppedSlot == "Bar") {
-
-        //           prizeValue = 800;
-
-        // } else if(rows[0].stoppedSlot == "Seven"
-        //           && rows[1].stoppedSlot == "Seven"
-        //           && rows[2].stoppedSlot == "Seven") {
-
-        //           prizeValue = 1500;
-
-        // } else if(rows[0].stoppedSlot == "Cherry"
-        //           && rows[1].stoppedSlot == "Cherry"
-        //           && rows[2].stoppedSlot == "Cherry") {
-
-        //           prizeValue = 3000;
-
-        // } else if(rows[0].stoppedSlot == "Lemon"
-        //           && rows[1].stoppedSlot == "Lemon"
-        //           && rows[2].stoppedSlot == "Lemon") {
-
-        //           prizeValue = 5000;
-
-        // }
-        #endregion
-        
-        resultsChecked = true;
     }
 }

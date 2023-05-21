@@ -18,10 +18,13 @@ public class SlotItem : MonoBehaviour
     
     [SerializeField]
     AudioClip stopSound;
+    protected SlotManager slotManager;
+
+    public virtual void Activate() {}
     
     void Start()
     {
-       
+       slotManager = FindObjectOfType<SlotManager>();
     }
 
     // Update is called once per frame
