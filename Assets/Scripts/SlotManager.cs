@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
-public class GameControl : MonoBehaviour
+public class SlotManager : MonoBehaviour
 {
     public static event Action OnSpinButtonClicked = delegate {};
 
@@ -15,13 +15,13 @@ public class GameControl : MonoBehaviour
     private bool resultsChecked = true;
 
     [HideInInspector]
-    public BattleManager battleManager;
+    public GameManager gameManager;
 
     // Update is called once per frame
     void Update()
     {
         CheckRows();
-        battleManager = FindObjectOfType<BattleManager>(); 
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     void CheckRows(){
@@ -32,18 +32,18 @@ public class GameControl : MonoBehaviour
         }
 
         //모든 row들이 멈췄고 아직 result가 체크되지 않았다면
-        if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && !resultsChecked &&  battleManager.currentBattleState == BattleState.SPINNING ) {
+        if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && !resultsChecked &&  gameManager.battleManager.currentBattleState == BattleState.SPINNING ) {
             CheckResults();
-            battleManager.currentBattleState = BattleState.PLAYERACTION;
+            gameManager.battleManager.currentBattleState = BattleState.PLAYERACTION;
         }
     }
 
     //also works with finger touches
     //mobile touch recommended for more complicated uses
     private void OnMouseDown() {
-        if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped) {
+        if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && gameManager.battleManager.currentBattleState == BattleState.PLAYERREADY) {
             OnSpinButtonClicked();
-            battleManager.currentBattleState = BattleState.SPINNING;
+            gameManager.battleManager.currentBattleState = BattleState.SPINNING;
         }
     }
 

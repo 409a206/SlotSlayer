@@ -33,8 +33,7 @@ public class Reel : MonoBehaviour
     public bool reelStopped;
     public string stoppedRow;
 
-    [SerializeField]
-    private GameControl gameControl;
+    private SlotManager slotManager;
 
     [SerializeField]
     private List<SlotItem> slotItems;
@@ -45,7 +44,7 @@ public class Reel : MonoBehaviour
         this.gameObject.transform.position = CorrespondingSlot.transform.position;
         originPosY = this.transform.position.y;
 
-        gameControl = GameObject.FindObjectOfType<GameControl>();
+        slotManager = GameObject.FindObjectOfType<SlotManager>();
 
 
         reelStopped = true;
@@ -62,7 +61,7 @@ public class Reel : MonoBehaviour
         // Debug.Log("fistSlotGlobalPosY: " + fistSlotGlobalPosY);
         // Debug.Log("lastSlotGlobalPosY: " + lastSlotGlobalPosY);
 
-        GameControl.OnSpinButtonClicked += StartRotating;
+        SlotManager.OnSpinButtonClicked += StartRotating;
     }
 
 
@@ -200,6 +199,6 @@ public class Reel : MonoBehaviour
     }
 
     private void OnDestroy() {
-        GameControl.OnSpinButtonClicked -= StartRotating;
+        SlotManager.OnSpinButtonClicked -= StartRotating;
     }
 }

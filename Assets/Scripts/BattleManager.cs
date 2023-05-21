@@ -27,21 +27,26 @@ public class BattleManager : MonoBehaviour
 	
 	[HideInInspector]
     public BattleState state;
+	[HideInInspector]
+	public GameManager gameManager;
 
 
     // Start is called before the first frame update
     void Start()
     {
+		gameManager = FindObjectOfType<GameManager>();
         currentBattleState = BattleState.START;
         StartCoroutine(SetupBattle());
     }
 
     IEnumerator SetupBattle()
     {
-        GameObject playerGO = Instantiate(playerPrefab, playerBattleStation);
+        GameObject playerGO = Instantiate(playerPrefab);
+		playerGO.transform.parent = playerBattleStation;
 		playerUnit = playerGO.GetComponent<Unit>();
 
-		GameObject enemyGO = Instantiate(enemyPrefab, enemyBattleStation);
+		GameObject enemyGO = Instantiate(enemyPrefab);
+		enemyGO.transform.parent = enemyBattleStation;
 		enemyUnit = enemyGO.GetComponent<Unit>();
 
 		dialogueText.text = "A wild " + enemyUnit.unitName + " approaches...";
@@ -51,7 +56,6 @@ public class BattleManager : MonoBehaviour
 
 		yield return new WaitForSeconds(2f);
 
-		state = BattleState.PLAYERREADY;
 		PlayerTurn();
     }
 	IEnumerator PlayerAttack()
@@ -111,7 +115,8 @@ public class BattleManager : MonoBehaviour
 
 	void PlayerTurn()
 	{
-		dialogueText.text = "Choose an action:";
+		dialogueText.text = "Ready To Spin!";
+		currentBattleState = BattleState.PLAYERREADY;
 	}
 
 	IEnumerator PlayerHeal()
