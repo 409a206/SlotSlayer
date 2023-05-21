@@ -39,7 +39,7 @@ public class SlotManager : MonoBehaviour
             OnSpinStopped?.Invoke();
         }
     }
-
+    
     //also works with finger touches
     //mobile touch function is recommended for more complicated uses
     private void OnMouseDown() {
