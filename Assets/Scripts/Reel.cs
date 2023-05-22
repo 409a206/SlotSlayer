@@ -164,8 +164,8 @@ public class Reel : MonoBehaviour
         //Debug.Log(this.name + " stoppedRow: " + stoppedRow);
 
         //Registering to delegate 'OnSpinStopped' functions to activate
-        SlotManager.OnSpinStopped += stoppedSlotItem.Activate;
-
+        slotManager.OnSpinStopped += stoppedSlotItem.Activate;
+       
         return stoppedSlotItem;
     }
 

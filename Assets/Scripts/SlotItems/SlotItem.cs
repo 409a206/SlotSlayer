@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Scriptable Object로 추후 변경 필요!!
-public class SlotItem : MonoBehaviour
+public abstract class SlotItem : MonoBehaviour
 {
     [SerializeField]
     private string slotItemName;
@@ -20,7 +20,8 @@ public class SlotItem : MonoBehaviour
     AudioClip stopSound;
     protected SlotManager slotManager;
     
-    public virtual void Activate() {}
+    [HideInInspector]
+    public abstract IEnumerator Activate();
     
     void Start()
     {

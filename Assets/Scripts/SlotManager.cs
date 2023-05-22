@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class SlotManager : MonoBehaviour
 {
     public static event Action OnSpinButtonClicked = delegate {};
-    public static event Action OnSpinStopped;
+    public Func<IEnumerator> OnSpinStopped;
 
     [SerializeField]
     public Reel[] reels;
@@ -36,7 +36,12 @@ public class SlotManager : MonoBehaviour
         if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && !resultsChecked) {
             resultsChecked = true;
             gameManager.battleManager.currentBattleState = BattleState.PLAYERACTION;
-            OnSpinStopped?.Invoke();
+            //StartCoroutine(onSpinStoppedFunction());
+            for (int i = 0; i < OnSpinStopped.GetInvocationList().Length; i++)
+            {
+                StartCoroutine((IEnumerator)OnSpinStopped.GetInvocationList()[i]);
+            }
+            Debug.Log("onSpinStoppedFunction.GetInvocationList().Length: " + OnSpinStopped.GetInvocationList().Length);
         }
     }
     
