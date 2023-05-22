@@ -88,6 +88,8 @@ public class Reel : MonoBehaviour
         {
             transform.position = new Vector2(transform.position.x, transform.position.y - slotInterval);
 
+            //transform.position = Vector2.Lerp(transform.position, )
+
             if(transform.position.y <= CorrespondingSlot.transform.position.y - lastSlotLocalPosY) {
                 transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
             }
@@ -162,7 +164,7 @@ public class Reel : MonoBehaviour
         stoppedRow = stoppedSlotItem?.SlotItemName ?? "Null";
         
         //Debug.Log(this.name + " stoppedRow: " + stoppedRow);
-
+        
         //Registering to delegate 'OnSpinStopped' functions to activate
         SlotManager.OnSpinStopped += stoppedSlotItem.Activate;
 
