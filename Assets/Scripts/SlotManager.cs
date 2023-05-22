@@ -36,18 +36,24 @@ public class SlotManager : MonoBehaviour
         if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && !resultsChecked) {
             resultsChecked = true;
             gameManager.battleManager.currentBattleState = BattleState.PLAYERACTION;
-            
-            OnSpinStopped?.Invoke();
+            //OnSpinStopped?.Invoke();
 
-            //delegate가 발동 되면 모든 메소드 구독 해지하기
-            if(OnSpinStopped != null) {
-                foreach (var d in OnSpinStopped.GetInvocationList()) {
-                    OnSpinStopped -= d as Action;
-                }
-            }
+            StartCoroutine(ActivateSlotItems());
+           
         }
     }
     
+    private IEnumerator ActivateSlotItems() {
+         foreach (Action action in OnSpinStopped.GetInvocationList())
+            {
+                action.Invoke();
+                OnSpinStopped -= action;
+                yield return new WaitForSeconds(2f);
+            }
+            gameManager.battleManager.currentBattleState = BattleState.ENEMYTURN;
+            gameManager.battleManager.StartEnemyTurn();
+    }
+
     //also works with finger touches
     //mobile touch function is recommended for more complicated uses
     private void OnMouseDown() {

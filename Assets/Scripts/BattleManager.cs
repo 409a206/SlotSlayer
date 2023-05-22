@@ -26,8 +26,6 @@ public class BattleManager : MonoBehaviour
 	Unit enemyUnit;
 	
 	[HideInInspector]
-    public BattleState state;
-	[HideInInspector]
 	public GameManager gameManager;
 
 
@@ -92,11 +90,11 @@ public class BattleManager : MonoBehaviour
 
 		if(isDead)
 		{
-			state = BattleState.LOST;
+			currentBattleState = BattleState.LOST;
 			EndBattle();
 		} else
 		{
-			state = BattleState.PLAYERREADY;
+			currentBattleState = BattleState.PLAYERREADY;
 			PlayerTurn();
 		}
 
@@ -104,10 +102,10 @@ public class BattleManager : MonoBehaviour
 
 	void EndBattle()
 	{
-		if(state == BattleState.WON)
+		if(currentBattleState == BattleState.WON)
 		{
 			dialogueText.text = "You won the battle!";
-		} else if (state == BattleState.LOST)
+		} else if (currentBattleState == BattleState.LOST)
 		{
 			dialogueText.text = "You were defeated.";
 		}
@@ -155,5 +153,8 @@ public class BattleManager : MonoBehaviour
 	public void Defend() {
 		StartCoroutine(PlayerDefend());
 		Debug.Log("Defend!");
+	}
+	public void StartEnemyTurn() {
+		StartCoroutine(EnemyTurn());
 	}
 }

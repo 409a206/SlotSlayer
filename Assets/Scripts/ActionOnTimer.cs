@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//일정 시간마다 Action을 callback하게 해주는 클래스
 public class ActionOnTimer : MonoBehaviour
 {
     private Action timerCallBack;
