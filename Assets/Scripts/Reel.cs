@@ -33,8 +33,7 @@ public class Reel : MonoBehaviour
     public bool reelStopped;
     public string stoppedRow;
 
-    [SerializeField]
-    private GameControl gameControl;
+    private SlotManager slotManager;
 
     [SerializeField]
     private List<SlotItem> slotItems;
@@ -45,7 +44,7 @@ public class Reel : MonoBehaviour
         this.gameObject.transform.position = CorrespondingSlot.transform.position;
         originPosY = this.transform.position.y;
 
-        gameControl = GameObject.FindObjectOfType<GameControl>();
+        slotManager = GameObject.FindObjectOfType<SlotManager>();
 
 
         reelStopped = true;
@@ -57,12 +56,12 @@ public class Reel : MonoBehaviour
         RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Heal"));
         RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Attack"));
 
-        Debug.Log("fistSlotLocalPosY: " + fistSlotLocalPosY);
-        Debug.Log("lastSlotLocalPosY: " + lastSlotLocalPosY);
+        // Debug.Log("fistSlotLocalPosY: " + fistSlotLocalPosY);
+        // Debug.Log("lastSlotLocalPosY: " + lastSlotLocalPosY);
         // Debug.Log("fistSlotGlobalPosY: " + fistSlotGlobalPosY);
         // Debug.Log("lastSlotGlobalPosY: " + lastSlotGlobalPosY);
 
-        GameControl.OnSpinButtonClicked += StartRotating;
+        SlotManager.OnSpinButtonClicked += StartRotating;
     }
 
 
@@ -74,7 +73,7 @@ public class Reel : MonoBehaviour
     private void StartRotating()
     {
      stoppedRow = "";
-        StartCoroutine("Rotate");
+     StartCoroutine("Rotate");
     }
 
     private IEnumerator Rotate() {
@@ -133,17 +132,19 @@ public class Reel : MonoBehaviour
         }
         
         #endregion
-
-        CalculateStoppedRow();
         
+        CalculateStoppedRow();
+
         reelStopped = true;
 
     }
 
-    //정지한 행 구하기
-    private void CalculateStoppedRow() {
+    //정지한 행(SlotItem) 구하기
+    private SlotItem CalculateStoppedRow() {
 
         StoppedSlotLocalPosY = originPosY - this.transform.position.y;
+        
+        SlotItem stoppedSlotItem = new SlotItem();
 
         //Debug.Log(this.name + "StoppedSlotLocalPosY: " + StoppedSlotLocalPosY);
 
@@ -153,13 +154,19 @@ public class Reel : MonoBehaviour
         {
             //Debug.Log(this.name + " slotItems[" + i + "].transform.localPosition.y: " + slotItems[i].transform.localPosition.y);
             if(slotItems[i].transform.localPosition.y.ToString() == StoppedSlotLocalPosY.ToString()) {
-                stoppedRow = slotItems[i].SlotItemName;
+                stoppedSlotItem = slotItems[i];
                 break;
             }
         }
+        
+        stoppedRow = stoppedSlotItem?.SlotItemName ?? "Null";
+        
+        //Debug.Log(this.name + " stoppedRow: " + stoppedRow);
 
-        Debug.Log(this.name + " stoppedRow: " + stoppedRow);
+        //Registering to delegate 'OnSpinStopped' functions to activate
+        SlotManager.OnSpinStopped += stoppedSlotItem.Activate;
 
+        return stoppedSlotItem;
     }
 
     //slotItem 등록
@@ -177,7 +184,7 @@ public class Reel : MonoBehaviour
 
         slotItems.Add(instantiatedSlotItem);
 
-        Debug.Log(this.name + " registered slot local pos y: " + slotItems[CountSlotItems() - 1].transform.localPosition.y);
+        //Debug.Log(this.name + " registered slot local pos y: " + slotItems[CountSlotItems() - 1].transform.localPosition.y);
 
         UpdateSlotData();
 
@@ -193,6 +200,7 @@ public class Reel : MonoBehaviour
         return slotItems.Length;
     }
 
+    //가장 위의 슬롯 위치 업데이트
     private void UpdateSlotData() {
         lastSlotLocalPosY = fistSlotLocalPosY + slotInterval * (slotItems.Count - 1);
         // Debug.Log("slotItems.Count: " + slotItems.Count);
@@ -200,6 +208,6 @@ public class Reel : MonoBehaviour
     }
 
     private void OnDestroy() {
-        GameControl.OnSpinButtonClicked -= StartRotating;
+        SlotManager.OnSpinButtonClicked -= StartRotating;
     }
 }
