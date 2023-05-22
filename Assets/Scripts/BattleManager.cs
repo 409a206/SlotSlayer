@@ -69,12 +69,12 @@ public class BattleManager : MonoBehaviour
 
 		if(isDead)
 		{
-			state = BattleState.WON;
+			currentBattleState = BattleState.WON;
 			EndBattle();
 		} else
 		{
-			state = BattleState.ENEMYTURN;
-			StartCoroutine(EnemyTurn());
+			//currentBattleState = BattleState.ENEMYTURN;
+			//StartCoroutine(EnemyTurn());
 		}
 	}
 
@@ -128,20 +128,32 @@ public class BattleManager : MonoBehaviour
 
 		yield return new WaitForSeconds(2f);
 
-		state = BattleState.ENEMYTURN;
-		StartCoroutine(EnemyTurn());
+		//state = BattleState.ENEMYTURN;
+		//StartCoroutine(EnemyTurn());
+	}
+	IEnumerator PlayerDefend()
+	{
+		dialogueText.text = "Player Defends!";
+
+		yield return new WaitForSeconds(2f);
+
+		//state = BattleState.ENEMYTURN;
+		//StartCoroutine(EnemyTurn());
 	}
 
 	public void Attack()
 	{
 		StartCoroutine(PlayerAttack());
+		Debug.Log("Attack!");
 	}
 
 	public void Heal()
 	{
 		StartCoroutine(PlayerHeal());
+		Debug.Log("Heal!");
 	}
 	public void Defend() {
+		StartCoroutine(PlayerDefend());
 		Debug.Log("Defend!");
 	}
 }
