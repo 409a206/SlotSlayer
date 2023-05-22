@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Attack : SlotItem
 {
-    public override IEnumerator Activate() {
+    public override void Activate() {
         AttackEnemy();
     }
     
-    public IEnumerator AttackEnemy() {
+    public void AttackEnemy() {
         slotManager.gameManager.battleManager.Attack();
     }
 }
