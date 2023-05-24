@@ -19,9 +19,9 @@ public class Reel : MonoBehaviour
     [SerializeField]
     private float slotInterval = 0.75f;
     //가장 위의 슬롯 로컬 위치
-    private float lastSlotLocalPosY;
+    private float lastSlotItemLocalPosY;
     //가장 아래의 슬롯 로컬 위치
-    private float fistSlotLocalPosY = 0;
+    private float firstSlotItemLocalPosY = 0;
     //현재 정지되어있는 슬롯의 로컬 위치
     private float StoppedSlotLocalPosY;
 
@@ -29,6 +29,13 @@ public class Reel : MonoBehaviour
     // private float lastSlotGlobalPosY;
     // //가장 아래의 슬롯 글로벌 위치
     // private float fistSlotGlobalPosY = 0;
+
+    //SlotItem Lerp를 위한 변수들
+    //lerp할 때 걸리는 시간
+    [SerializeField]
+    float lerpTime = 1f;
+    //lerp 시작 후 몇초 경과했는지
+    float elapsedTime = 0f;
 
     public bool reelStopped;
     public string stoppedRow;
@@ -38,7 +45,6 @@ public class Reel : MonoBehaviour
     [SerializeField]
     private List<SlotItem> slotItems;
 
-    // Start is called before the first frame update
     void Start()
     {
         this.gameObject.transform.position = CorrespondingSlot.transform.position;
@@ -48,28 +54,22 @@ public class Reel : MonoBehaviour
 
 
         reelStopped = true;
-        lastSlotLocalPosY = slotInterval * (slotItems.Count - 1);
+        lastSlotItemLocalPosY = slotInterval * (slotItems.Count - 1);
         // fistSlotGlobalPosY = CorrespondingSlot.transform.position.y;
-        // lastSlotGlobalPosY = fistSlotGlobalPosY - lastSlotLocalPosY;
+        // lastSlotGlobalPosY = fistSlotGlobalPosY - lastSlotItemLocalPosY;
 
         //fortest
         RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Heal"));
         RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Attack"));
 
-        // Debug.Log("fistSlotLocalPosY: " + fistSlotLocalPosY);
-        // Debug.Log("lastSlotLocalPosY: " + lastSlotLocalPosY);
+        // Debug.Log("firstSlotItemLocalPosY: " + firstSlotItemLocalPosY);
+        // Debug.Log("lastSlotItemLocalPosY: " + lastSlotItemLocalPosY);
         // Debug.Log("fistSlotGlobalPosY: " + fistSlotGlobalPosY);
         // Debug.Log("lastSlotGlobalPosY: " + lastSlotGlobalPosY);
 
         SlotManager.OnSpinButtonClicked += StartRotating;
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void StartRotating()
     {
      stoppedRow = "";
@@ -80,27 +80,49 @@ public class Reel : MonoBehaviour
 
         reelStopped = false;
         timeInterval = 0.025f;
+        elapsedTime = 0f;
 
-        //for test
-        //timeInterval = 1.0f;
+        Vector2 startPosition; 
+        Vector2 endPosition;
 
-        for (int i = 0; i < 30; i++)
-        {
-            transform.position = new Vector2(transform.position.x, transform.position.y - slotInterval);
+        for(int i = 0; i < 100; i++) {
+            
+            startPosition = this.transform.position;
+            endPosition = new Vector2(transform.position.x, this.transform.position.y - slotInterval);
 
-            //transform.position = Vector2.Lerp(transform.position, )
+            elapsedTime = 0;
 
-            if(transform.position.y <= CorrespondingSlot.transform.position.y - lastSlotLocalPosY) {
-                transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
+            while(elapsedTime < lerpTime) {
+                elapsedTime += Time.deltaTime;
+                if(elapsedTime >= lerpTime) elapsedTime = lerpTime;
+
+
+                transform.position = Vector2.Lerp(startPosition, endPosition, elapsedTime / lerpTime);
+
+                yield return null;
             }
 
+            if(transform.position.y <= CorrespondingSlot.transform.position.y - (lastSlotItemLocalPosY - slotInterval)) {
+                    transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
+            }
 
-            yield return new WaitForSeconds(timeInterval);
         }
+           
+        
+        // for (int i = 0; i < 30; i++)
+        // {
+        //     transform.position = new Vector2(transform.position.x, transform.position.y - slotInterval);
+
+        //     if(transform.position.y <= CorrespondingSlot.transform.position.y - lastSlotItemLocalPosY) {
+        //         transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
+        //     }
+
+        //     yield return new WaitForSeconds(timeInterval);
+        // }
 
         //elaboration needed
         #region randomizeResults
-        
+        Debug.Log("#region randomizeResults");
         randomValue = UnityEngine.Random.Range(60, 100);
 
         //correcting random value
@@ -126,7 +148,7 @@ public class Reel : MonoBehaviour
             if(i > Mathf.RoundToInt(randomValue * slotInterval * 3)) timeInterval = 0.15f;
             if(i > Mathf.RoundToInt(randomValue * slotInterval * 4)) timeInterval = 0.2f;
 
-            if(transform.position.y <= CorrespondingSlot.transform.position.y - lastSlotLocalPosY) {
+            if(transform.position.y <= CorrespondingSlot.transform.position.y - lastSlotItemLocalPosY) {
                 transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
             }
 
@@ -176,7 +198,7 @@ public class Reel : MonoBehaviour
         
         int slotItemCount = CountSlotItems();
 
-        Vector3 SlotItemRegisterPosition = new Vector3(0, fistSlotLocalPosY + slotItemCount * slotInterval, 0);
+        Vector3 SlotItemRegisterPosition = new Vector3(0, firstSlotItemLocalPosY + slotItemCount * slotInterval, 0);
 
         //slotItems.Add(slotItem);
 
@@ -204,9 +226,9 @@ public class Reel : MonoBehaviour
 
     //가장 위의 슬롯 위치 업데이트
     private void UpdateSlotData() {
-        lastSlotLocalPosY = fistSlotLocalPosY + slotInterval * (slotItems.Count - 1);
+        lastSlotItemLocalPosY = firstSlotItemLocalPosY + slotInterval * (slotItems.Count - 1);
         // Debug.Log("slotItems.Count: " + slotItems.Count);
-        //Debug.Log("lastSlotLocalPosY: " + lastSlotLocalPosY);
+        //Debug.Log("lastSlotItemLocalPosY: " + lastSlotItemLocalPosY);
     }
 
     private void OnDestroy() {
