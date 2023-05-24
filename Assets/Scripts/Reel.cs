@@ -110,11 +110,8 @@ public class Reel : MonoBehaviour
         }
 
         //elaboration needed
-        #region randomizeResults
+        #region randomizeResults(Legacy)
         Debug.Log("#region randomizeResults");
-
-
-        
 
         // randomValue = UnityEngine.Random.Range(60, 100);
 
@@ -155,6 +152,10 @@ public class Reel : MonoBehaviour
 
         reelStopped = true;
 
+    }
+
+    private void InstantiateRandomSlotItem() {
+        
     }
 
     //정지한 행(SlotItem) 구하기
