@@ -901,10 +901,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8011ce55f75403644bf8958ae0a9aecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CorrespondingSlot: {fileID: 569974743}
   slotInterval: 0.75
+  lerpTime: 0.02
+  spinCount: 100
   reelStopped: 0
   stoppedRow: 
+  CorrespondingSlot: {fileID: 569974743}
   slotItems:
   - {fileID: 1805809068}
   - {fileID: 554554461}
@@ -1075,6 +1077,7 @@ MonoBehaviour:
   slotManager: {fileID: 0}
   battleManager: {fileID: 0}
   soundManager: {fileID: 0}
+  actionOnTimer: {fileID: 0}
 --- !u!4 &428830515
 Transform:
   m_ObjectHideFlags: 0
@@ -2297,10 +2300,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8011ce55f75403644bf8958ae0a9aecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CorrespondingSlot: {fileID: 0}
   slotInterval: 0.25
+  lerpTime: 0.5
+  spinCount: 10
   reelStopped: 0
   stoppedRow: 
+  CorrespondingSlot: {fileID: 0}
   slotItems: []
 --- !u!1 &1269352150
 GameObject:
@@ -2348,10 +2353,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8011ce55f75403644bf8958ae0a9aecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CorrespondingSlot: {fileID: 826591224}
   slotInterval: 0.75
+  lerpTime: 0.02
+  spinCount: 100
   reelStopped: 0
   stoppedRow: 
+  CorrespondingSlot: {fileID: 826591224}
   slotItems:
   - {fileID: 871776979}
   - {fileID: 2054930439}
@@ -2702,10 +2709,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8011ce55f75403644bf8958ae0a9aecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CorrespondingSlot: {fileID: 0}
   slotInterval: 0.25
+  lerpTime: 0.5
+  spinCount: 10
   reelStopped: 0
   stoppedRow: 
+  CorrespondingSlot: {fileID: 0}
   slotItems: []
 --- !u!1 &1438879512
 GameObject:
@@ -3612,10 +3621,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8011ce55f75403644bf8958ae0a9aecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CorrespondingSlot: {fileID: 1476687524}
   slotInterval: 0.75
+  lerpTime: 0.02
+  spinCount: 100
   reelStopped: 0
   stoppedRow: 
+  CorrespondingSlot: {fileID: 1476687524}
   slotItems:
   - {fileID: 659476381}
   - {fileID: 928455404}
@@ -4496,7 +4507,6 @@ MonoBehaviour:
   playerBattleStation: {fileID: 1558894331}
   enemyBattleStation: {fileID: 1911540192}
   dialogueText: {fileID: 166650827}
-  state: 0
   gameManager: {fileID: 0}
 --- !u!4 &2034225479
 Transform:
@@ -4833,10 +4843,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8011ce55f75403644bf8958ae0a9aecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CorrespondingSlot: {fileID: 0}
   slotInterval: 0.25
+  lerpTime: 0.5
+  spinCount: 10
   reelStopped: 0
   stoppedRow: 
+  CorrespondingSlot: {fileID: 0}
   slotItems: []
 --- !u!1001 &524735346678030038
 PrefabInstance:

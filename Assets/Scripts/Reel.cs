@@ -9,36 +9,43 @@ public class Reel : MonoBehaviour
     private int randomValue;
     //used to slow the movement of rows
     private float timeInterval;
-    //corresponding empty slot
-    [SerializeField]
-    private GameObject CorrespondingSlot;
 
+    //슬롯 아이템의 간격과 위치에 관한 변수
+    //슬롯 아이템의 초기 글로벌 좌표
     private float originPosY;
-
     //슬롯간의 간격
     [SerializeField]
     private float slotInterval = 0.75f;
     //가장 위의 슬롯 로컬 위치
-    private float lastSlotLocalPosY;
+    private float lastSlotItemLocalPosY;
     //가장 아래의 슬롯 로컬 위치
-    private float fistSlotLocalPosY = 0;
+    private float firstSlotItemLocalPosY = 0;
     //현재 정지되어있는 슬롯의 로컬 위치
     private float StoppedSlotLocalPosY;
 
-    // //가장 위의 슬롯 글로벌 위치
-    // private float lastSlotGlobalPosY;
-    // //가장 아래의 슬롯 글로벌 위치
-    // private float fistSlotGlobalPosY = 0;
+    //스핀시 슬롯 아이템 Lerp를 위한 변수들
+    //lerp할 때 걸리는 시간
+    [SerializeField]
+    float lerpTime = 1f;
+    //lerp 시작 후 몇초 경과했는지
+    float elapsedTime = 0f;
+
+    //randomization 전 스핀할 슬롯칸 횟수
+    [SerializeField]
+    int spinCount = 10; 
 
     public bool reelStopped;
     public string stoppedRow;
 
+    //레퍼런스 변수들
     private SlotManager slotManager;
-
+    //corresponding empty slot
+    [SerializeField]
+    private GameObject CorrespondingSlot;
+    //릴에 할당되어있는 슬롯 아이템의 리스트
     [SerializeField]
     private List<SlotItem> slotItems;
 
-    // Start is called before the first frame update
     void Start()
     {
         this.gameObject.transform.position = CorrespondingSlot.transform.position;
@@ -48,28 +55,22 @@ public class Reel : MonoBehaviour
 
 
         reelStopped = true;
-        lastSlotLocalPosY = slotInterval * (slotItems.Count - 1);
+        lastSlotItemLocalPosY = slotInterval * (slotItems.Count - 1);
         // fistSlotGlobalPosY = CorrespondingSlot.transform.position.y;
-        // lastSlotGlobalPosY = fistSlotGlobalPosY - lastSlotLocalPosY;
+        // lastSlotGlobalPosY = fistSlotGlobalPosY - lastSlotItemLocalPosY;
 
         //fortest
         RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Heal"));
         RegisterSlotItem(Resources.Load<SlotItem>("Prefabs/Dummy/Attack"));
 
-        // Debug.Log("fistSlotLocalPosY: " + fistSlotLocalPosY);
-        // Debug.Log("lastSlotLocalPosY: " + lastSlotLocalPosY);
+        // Debug.Log("firstSlotItemLocalPosY: " + firstSlotItemLocalPosY);
+        // Debug.Log("lastSlotItemLocalPosY: " + lastSlotItemLocalPosY);
         // Debug.Log("fistSlotGlobalPosY: " + fistSlotGlobalPosY);
         // Debug.Log("lastSlotGlobalPosY: " + lastSlotGlobalPosY);
 
         SlotManager.OnSpinButtonClicked += StartRotating;
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void StartRotating()
     {
      stoppedRow = "";
@@ -79,57 +80,71 @@ public class Reel : MonoBehaviour
     private IEnumerator Rotate() {
 
         reelStopped = false;
-        timeInterval = 0.025f;
 
-        //for test
-        //timeInterval = 1.0f;
+        elapsedTime = 0f;
+        //timeInterval = 0.025f;
 
-        for (int i = 0; i < 30; i++)
-        {
-            transform.position = new Vector2(transform.position.x, transform.position.y - slotInterval);
+        Vector2 startPosition; 
+        Vector2 endPosition;
 
-            if(transform.position.y <= CorrespondingSlot.transform.position.y - lastSlotLocalPosY) {
-                transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
+        for(int i = 0; i < spinCount; i++) {
+            
+            startPosition = this.transform.position;
+            endPosition = new Vector2(transform.position.x, this.transform.position.y - slotInterval);
+
+            elapsedTime = 0;
+
+            while(elapsedTime < lerpTime) {
+                elapsedTime += Time.deltaTime;
+                if(elapsedTime >= lerpTime) elapsedTime = lerpTime;
+
+                transform.position = Vector2.Lerp(startPosition, endPosition, elapsedTime / lerpTime);
+
+                yield return null;
             }
 
+            if(transform.position.y <= CorrespondingSlot.transform.position.y - (lastSlotItemLocalPosY - slotInterval)) {
+                    transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
+            }
 
-            yield return new WaitForSeconds(timeInterval);
         }
 
         //elaboration needed
-        #region randomizeResults
-        
-        randomValue = UnityEngine.Random.Range(60, 100);
+        #region randomizeResults(Legacy)
+        Debug.Log("#region randomizeResults");
 
-        //correcting random value
-        //this is because we have 3 steps between each item in a row
-        switch (randomValue % 3)
-        {
-            case 1 :
-                randomValue += 2;
-                break;
-            case 2 : 
-                randomValue += 1;
-                break; 
+        // randomValue = UnityEngine.Random.Range(60, 100);
+
+        // //correcting random value
+        // //this is because we have 3 steps between each item in a row
+        // switch (randomValue % 3)
+        // {
+        //     case 1 :
+        //         randomValue += 2;
+        //         break;
+        //     case 2 : 
+        //         randomValue += 1;
+        //         break; 
            
-        }
+        // }
 
-        for (int i = 0; i < randomValue; i++)
-        {
-            transform.position = new Vector2(transform.position.x, transform.position.y - slotInterval);
+        // for (int i = 0; i < randomValue; i++)
+        // {
+        //     transform.position = new Vector2(transform.position.x, transform.position.y - slotInterval);
 
 
-            if(i > Mathf.RoundToInt(randomValue * slotInterval)) timeInterval = 0.05f;
-            if(i > Mathf.RoundToInt(randomValue * slotInterval * 2)) timeInterval = 0.1f;
-            if(i > Mathf.RoundToInt(randomValue * slotInterval * 3)) timeInterval = 0.15f;
-            if(i > Mathf.RoundToInt(randomValue * slotInterval * 4)) timeInterval = 0.2f;
+        //     if(i > Mathf.RoundToInt(randomValue * slotInterval)) timeInterval = 0.05f;
+        //     if(i > Mathf.RoundToInt(randomValue * slotInterval * 2)) timeInterval = 0.1f;
+        //     if(i > Mathf.RoundToInt(randomValue * slotInterval * 3)) timeInterval = 0.15f;
+        //     if(i > Mathf.RoundToInt(randomValue * slotInterval * 4)) timeInterval = 0.2f;
 
-            if(transform.position.y <= CorrespondingSlot.transform.position.y - lastSlotLocalPosY) {
-                transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
-            }
+        //     if(transform.position.y <= CorrespondingSlot.transform.position.y - lastSlotItemLocalPosY) {
+        //         transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
+        //     }
 
-            yield return new WaitForSeconds(timeInterval);
-        }
+        //     yield return new WaitForSeconds(timeInterval);
+        // }
+        
         
         #endregion
         
@@ -137,6 +152,10 @@ public class Reel : MonoBehaviour
 
         reelStopped = true;
 
+    }
+
+    private void InstantiateRandomSlotItem() {
+        
     }
 
     //정지한 행(SlotItem) 구하기
@@ -162,7 +181,7 @@ public class Reel : MonoBehaviour
         stoppedRow = stoppedSlotItem?.SlotItemName ?? "Null";
         
         //Debug.Log(this.name + " stoppedRow: " + stoppedRow);
-
+        
         //Registering to delegate 'OnSpinStopped' functions to activate
         SlotManager.OnSpinStopped += stoppedSlotItem.Activate;
 
@@ -174,7 +193,7 @@ public class Reel : MonoBehaviour
         
         int slotItemCount = CountSlotItems();
 
-        Vector3 SlotItemRegisterPosition = new Vector3(0, fistSlotLocalPosY + slotItemCount * slotInterval, 0);
+        Vector3 SlotItemRegisterPosition = new Vector3(0, firstSlotItemLocalPosY + slotItemCount * slotInterval, 0);
 
         //slotItems.Add(slotItem);
 
@@ -202,9 +221,9 @@ public class Reel : MonoBehaviour
 
     //가장 위의 슬롯 위치 업데이트
     private void UpdateSlotData() {
-        lastSlotLocalPosY = fistSlotLocalPosY + slotInterval * (slotItems.Count - 1);
+        lastSlotItemLocalPosY = firstSlotItemLocalPosY + slotInterval * (slotItems.Count - 1);
         // Debug.Log("slotItems.Count: " + slotItems.Count);
-        //Debug.Log("lastSlotLocalPosY: " + lastSlotLocalPosY);
+        //Debug.Log("lastSlotItemLocalPosY: " + lastSlotItemLocalPosY);
     }
 
     private void OnDestroy() {
