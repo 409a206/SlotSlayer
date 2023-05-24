@@ -9,12 +9,10 @@ public class Reel : MonoBehaviour
     private int randomValue;
     //used to slow the movement of rows
     private float timeInterval;
-    //corresponding empty slot
-    [SerializeField]
-    private GameObject CorrespondingSlot;
 
+    //슬롯 아이템의 간격과 위치에 관한 변수
+    //슬롯 아이템의 초기 글로벌 좌표
     private float originPosY;
-
     //슬롯간의 간격
     [SerializeField]
     private float slotInterval = 0.75f;
@@ -25,23 +23,26 @@ public class Reel : MonoBehaviour
     //현재 정지되어있는 슬롯의 로컬 위치
     private float StoppedSlotLocalPosY;
 
-    // //가장 위의 슬롯 글로벌 위치
-    // private float lastSlotGlobalPosY;
-    // //가장 아래의 슬롯 글로벌 위치
-    // private float fistSlotGlobalPosY = 0;
-
-    //SlotItem Lerp를 위한 변수들
+    //스핀시 슬롯 아이템 Lerp를 위한 변수들
     //lerp할 때 걸리는 시간
     [SerializeField]
     float lerpTime = 1f;
     //lerp 시작 후 몇초 경과했는지
     float elapsedTime = 0f;
 
+    //randomization 전 스핀할 슬롯칸 횟수
+    [SerializeField]
+    int spinCount = 10; 
+
     public bool reelStopped;
     public string stoppedRow;
 
+    //레퍼런스 변수들
     private SlotManager slotManager;
-
+    //corresponding empty slot
+    [SerializeField]
+    private GameObject CorrespondingSlot;
+    //릴에 할당되어있는 슬롯 아이템의 리스트
     [SerializeField]
     private List<SlotItem> slotItems;
 
@@ -79,13 +80,14 @@ public class Reel : MonoBehaviour
     private IEnumerator Rotate() {
 
         reelStopped = false;
-        timeInterval = 0.025f;
+
         elapsedTime = 0f;
+        //timeInterval = 0.025f;
 
         Vector2 startPosition; 
         Vector2 endPosition;
 
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < spinCount; i++) {
             
             startPosition = this.transform.position;
             endPosition = new Vector2(transform.position.x, this.transform.position.y - slotInterval);
@@ -95,7 +97,6 @@ public class Reel : MonoBehaviour
             while(elapsedTime < lerpTime) {
                 elapsedTime += Time.deltaTime;
                 if(elapsedTime >= lerpTime) elapsedTime = lerpTime;
-
 
                 transform.position = Vector2.Lerp(startPosition, endPosition, elapsedTime / lerpTime);
 
@@ -107,11 +108,38 @@ public class Reel : MonoBehaviour
             }
 
         }
-           
+
+        //elaboration needed
+        #region randomizeResults
+        Debug.Log("#region randomizeResults");
+
+
         
-        // for (int i = 0; i < 30; i++)
+
+        // randomValue = UnityEngine.Random.Range(60, 100);
+
+        // //correcting random value
+        // //this is because we have 3 steps between each item in a row
+        // switch (randomValue % 3)
+        // {
+        //     case 1 :
+        //         randomValue += 2;
+        //         break;
+        //     case 2 : 
+        //         randomValue += 1;
+        //         break; 
+           
+        // }
+
+        // for (int i = 0; i < randomValue; i++)
         // {
         //     transform.position = new Vector2(transform.position.x, transform.position.y - slotInterval);
+
+
+        //     if(i > Mathf.RoundToInt(randomValue * slotInterval)) timeInterval = 0.05f;
+        //     if(i > Mathf.RoundToInt(randomValue * slotInterval * 2)) timeInterval = 0.1f;
+        //     if(i > Mathf.RoundToInt(randomValue * slotInterval * 3)) timeInterval = 0.15f;
+        //     if(i > Mathf.RoundToInt(randomValue * slotInterval * 4)) timeInterval = 0.2f;
 
         //     if(transform.position.y <= CorrespondingSlot.transform.position.y - lastSlotItemLocalPosY) {
         //         transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
@@ -119,41 +147,7 @@ public class Reel : MonoBehaviour
 
         //     yield return new WaitForSeconds(timeInterval);
         // }
-
-        //elaboration needed
-        #region randomizeResults
-        Debug.Log("#region randomizeResults");
-        randomValue = UnityEngine.Random.Range(60, 100);
-
-        //correcting random value
-        //this is because we have 3 steps between each item in a row
-        switch (randomValue % 3)
-        {
-            case 1 :
-                randomValue += 2;
-                break;
-            case 2 : 
-                randomValue += 1;
-                break; 
-           
-        }
-
-        for (int i = 0; i < randomValue; i++)
-        {
-            transform.position = new Vector2(transform.position.x, transform.position.y - slotInterval);
-
-
-            if(i > Mathf.RoundToInt(randomValue * slotInterval)) timeInterval = 0.05f;
-            if(i > Mathf.RoundToInt(randomValue * slotInterval * 2)) timeInterval = 0.1f;
-            if(i > Mathf.RoundToInt(randomValue * slotInterval * 3)) timeInterval = 0.15f;
-            if(i > Mathf.RoundToInt(randomValue * slotInterval * 4)) timeInterval = 0.2f;
-
-            if(transform.position.y <= CorrespondingSlot.transform.position.y - lastSlotItemLocalPosY) {
-                transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
-            }
-
-            yield return new WaitForSeconds(timeInterval);
-        }
+        
         
         #endregion
         
