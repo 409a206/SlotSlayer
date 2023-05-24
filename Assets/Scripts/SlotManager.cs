@@ -46,7 +46,7 @@ public class SlotManager : MonoBehaviour
     private IEnumerator ActivateSlotItems() {
          foreach (Action action in OnSpinStopped.GetInvocationList())
             {
-                action.Invoke();
+                action?.Invoke();
                 OnSpinStopped -= action;
                 yield return new WaitForSeconds(2f);
             }

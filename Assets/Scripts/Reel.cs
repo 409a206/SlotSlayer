@@ -108,10 +108,10 @@ public class Reel : MonoBehaviour
             }
 
         }
-
-        //elaboration needed
+        
+        //Legacy
         #region randomizeResults(Legacy)
-        Debug.Log("#region randomizeResults");
+        //Debug.Log("#region randomizeResults");
 
         // randomValue = UnityEngine.Random.Range(60, 100);
 
@@ -154,7 +154,10 @@ public class Reel : MonoBehaviour
 
     }
 
-    private void InstantiateRandomSlotItem() {
+    //List에서 무작위의 슬롯 아이템을 생성(not finished)
+    private void InstantiateRandomSlotItemFromList() {
+        //인수로 사용할 임의의 수
+        int randomNumber = UnityEngine.Random.Range(0, slotItems.Count);
         
     }
 
@@ -165,13 +168,8 @@ public class Reel : MonoBehaviour
         
         SlotItem stoppedSlotItem = new SlotItem();
 
-        //Debug.Log(this.name + "StoppedSlotLocalPosY: " + StoppedSlotLocalPosY);
-
-        //Debug.Log(this.name + "slotItems.Count: " + slotItems.Count);
-
         for (int i = 0; i < slotItems.Count; i++)
         {
-            //Debug.Log(this.name + " slotItems[" + i + "].transform.localPosition.y: " + slotItems[i].transform.localPosition.y);
             if(slotItems[i].transform.localPosition.y.ToString() == StoppedSlotLocalPosY.ToString()) {
                 stoppedSlotItem = slotItems[i];
                 break;
@@ -188,14 +186,12 @@ public class Reel : MonoBehaviour
         return stoppedSlotItem;
     }
 
-    //slotItem 등록
+    //slotItem을 Reel에 등록
     private void RegisterSlotItem(SlotItem slotItem) {
         
         int slotItemCount = CountSlotItems();
 
         Vector3 SlotItemRegisterPosition = new Vector3(0, firstSlotItemLocalPosY + slotItemCount * slotInterval, 0);
-
-        //slotItems.Add(slotItem);
 
         SlotItem instantiatedSlotItem = Instantiate(slotItem, new Vector3(), Quaternion.identity);
         instantiatedSlotItem.transform.parent = this.gameObject.transform;
@@ -206,6 +202,10 @@ public class Reel : MonoBehaviour
         //Debug.Log(this.name + " registered slot local pos y: " + slotItems[CountSlotItems() - 1].transform.localPosition.y);
 
         UpdateSlotData();
+    }
+
+    //List에서 슬롯 아이템 삭제
+    private void DeleteSlotItemFromList() {
 
     }
 
