@@ -739,6 +739,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a4ce8e4cf9beb2408be585ce29c9ca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spinsLeft: 3
+  totalAvailableSlotItemToSelect: 5
   reels:
   - {fileID: 384910104}
   - {fileID: 1708711418}

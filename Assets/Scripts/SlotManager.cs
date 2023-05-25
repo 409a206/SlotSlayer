@@ -10,10 +10,22 @@ public class SlotManager : MonoBehaviour
     public static event Action OnSpinStopped;
 
     [SerializeField]
+    [Tooltip("남은 스핀 횟수")]
+    private int spinsLeft = 3;
+
+    [SerializeField]
+    [Tooltip("선택할 수 있는 총 슬롯 아이템 갯수")]
+    private int totalAvailableSlotItemToSelect = 5;
+
+    //선택된 슬롯 아이템 갯수
+    private int selectedSlotItemCount = 0;
+
+    [SerializeField]
     public Reel[] reels;
 
     //this variable is so that it does not check the results multiple times when row stops spinning
     private bool resultsChecked = true;
+
 
     [HideInInspector]
     public GameManager gameManager;
