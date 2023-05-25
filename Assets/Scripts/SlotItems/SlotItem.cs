@@ -8,6 +8,12 @@ public class SlotItem : MonoBehaviour
     [SerializeField]
     private string slotItemName;
 
+    private bool isSelected = false;
+    public bool IsSelected {
+        get {return isSelected;}
+        set {isSelected = value;}
+    }
+
     public string SlotItemName {
         get {return slotItemName;}
         set {slotItemName = value;}
@@ -18,6 +24,7 @@ public class SlotItem : MonoBehaviour
     
     [SerializeField]
     AudioClip stopSound;
+
     protected SlotManager slotManager;
     
     public virtual void Activate() {}

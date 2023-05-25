@@ -23,7 +23,6 @@ public class SlotManager : MonoBehaviour
     [SerializeField]
     public Reel[] reels;
 
-    //this variable is so that it does not check the results multiple times when row stops spinning
     private bool resultsChecked = true;
 
 
@@ -38,10 +37,11 @@ public class SlotManager : MonoBehaviour
     }
 
     void CheckRows(){
+        
         //모든 row들이 멈출때까지 기다리기
-        if(!reels[0].reelStopped || !reels[1].reelStopped || !reels[2].reelStopped) {
-
-            resultsChecked = false;
+        for (int i = 0; i < reels.Length; i++)
+        {
+            if(!reels[i].reelStopped) resultsChecked = false;
         }
 
         //모든 row들이 멈췄고 아직 result가 체크되지 않았다면

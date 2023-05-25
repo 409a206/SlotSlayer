@@ -5,13 +5,7 @@ using UnityEngine;
 
 public class Reel : MonoBehaviour
 {   
-    //hold number of rotation steps
-    private int randomValue;
-    //used to slow the movement of rows
-    private float timeInterval;
-
     //슬롯 아이템의 간격과 위치에 관한 변수
-
     //슬롯간의 간격
     [SerializeField]
     private float slotInterval = 0.75f;
@@ -29,7 +23,7 @@ public class Reel : MonoBehaviour
     //lerp 시작 후 몇초 경과했는지
     float elapsedTime = 0f;
 
-    //randomization 전 스핀할 슬롯칸 횟수
+    //spin할 칸 횟수
     [SerializeField]
     int spinCount = 10; 
 
