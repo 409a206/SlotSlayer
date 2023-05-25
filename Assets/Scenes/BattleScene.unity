@@ -788,8 +788,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotInterval: 0.75
-  lerpTime: 0.02
-  spinCount: 100
+  lerpTime: 1
+  spinCount: 10
   reelStopped: 0
   stoppedRow: 
   CorrespondingSlot: {fileID: 569974743}
@@ -1838,8 +1838,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotInterval: 0.75
-  lerpTime: 0.02
-  spinCount: 120
+  lerpTime: 1
+  spinCount: 10
   reelStopped: 0
   stoppedRow: 
   CorrespondingSlot: {fileID: 826591224}
@@ -2998,8 +2998,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotInterval: 0.75
-  lerpTime: 0.02
-  spinCount: 110
+  lerpTime: 1
+  spinCount: 10
   reelStopped: 0
   stoppedRow: 
   CorrespondingSlot: {fileID: 1476687524}

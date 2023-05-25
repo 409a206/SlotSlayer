@@ -12,7 +12,7 @@ public class Reel : MonoBehaviour
 
     //슬롯 아이템의 간격과 위치에 관한 변수
     //슬롯 아이템의 초기 글로벌 좌표
-    private float originPosY;
+    private Vector3 originPos;
     //슬롯간의 간격
     [SerializeField]
     private float slotInterval = 0.75f;
@@ -49,8 +49,7 @@ public class Reel : MonoBehaviour
     void Start()
     {
         this.gameObject.transform.position = CorrespondingSlot.transform.position;
-        originPosY = this.transform.position.y;
-
+        originPos = gameObject.transform.position;
         slotManager = GameObject.FindObjectOfType<SlotManager>();
 
 
@@ -64,7 +63,7 @@ public class Reel : MonoBehaviour
         slotItems.Add(Resources.Load<SlotItem>("Prefabs/Dummy/Attack"));
         slotItems.Add(Resources.Load<SlotItem>("Prefabs/Dummy/Defend"));
 
-        InstantiateRandomSlotItems(5);
+        InstantiateRandomSlotItems(1);
 
         SlotManager.OnSpinButtonClicked += StartRotating;
     }
@@ -80,76 +79,31 @@ public class Reel : MonoBehaviour
         reelStopped = false;
 
         elapsedTime = 0f;
-        //timeInterval = 0.025f;
-
-        Vector2 startPosition; 
-        Vector2 endPosition;
+        
+        Vector2 startLocalPos1 = new Vector2(0,0);
+        Vector2 endLocalPos1 = new Vector2(0,-slotInterval);
+        Vector2 startLocalPos2 = new Vector2(0,slotInterval);
+        Vector2 endLocalPos2 = new Vector2(0, 0);
 
         for(int i = 0; i < spinCount; i++) {
             
-
-            startPosition = this.transform.position;
-            endPosition = new Vector2(transform.position.x, this.transform.position.y - slotInterval);
-
             elapsedTime = 0;
+            
+            InstantiateRandomSlotItems(1);
 
             while(elapsedTime < lerpTime) {
                 elapsedTime += Time.deltaTime;
                 if(elapsedTime >= lerpTime) elapsedTime = lerpTime;
-
-                this.transform.position = Vector2.Lerp(startPosition, endPosition, elapsedTime / lerpTime);
-
+                
+                GetComponentsInChildren<SlotItem>()[0].transform.localPosition = Vector2.Lerp(startLocalPos1, endLocalPos1, elapsedTime/lerpTime);
+                GetComponentsInChildren<SlotItem>()[1].transform.localPosition = Vector2.Lerp(startLocalPos2, endLocalPos2, elapsedTime/lerpTime);
+               
                 yield return null;
             }
-
             
-            InstantiateRandomSlotItems(1);
             GameObject.Destroy(this.GetComponentsInChildren<SlotItem>()[0].gameObject);
-
-            // if(transform.position.y <= CorrespondingSlot.transform.position.y - (lastSlotItemLocalPosY - slotInterval)) {
-            //         transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
-            // }
-
+            
         }
-        
-        //Legacy
-        #region randomizeResults(Legacy)
-        //Debug.Log("#region randomizeResults");
-
-        // randomValue = UnityEngine.Random.Range(60, 100);
-
-        // //correcting random value
-        // //this is because we have 3 steps between each item in a row
-        // switch (randomValue % 3)
-        // {
-        //     case 1 :
-        //         randomValue += 2;
-        //         break;
-        //     case 2 : 
-        //         randomValue += 1;
-        //         break; 
-           
-        // }
-
-        // for (int i = 0; i < randomValue; i++)
-        // {
-        //     transform.position = new Vector2(transform.position.x, transform.position.y - slotInterval);
-
-
-        //     if(i > Mathf.RoundToInt(randomValue * slotInterval)) timeInterval = 0.05f;
-        //     if(i > Mathf.RoundToInt(randomValue * slotInterval * 2)) timeInterval = 0.1f;
-        //     if(i > Mathf.RoundToInt(randomValue * slotInterval * 3)) timeInterval = 0.15f;
-        //     if(i > Mathf.RoundToInt(randomValue * slotInterval * 4)) timeInterval = 0.2f;
-
-        //     if(transform.position.y <= CorrespondingSlot.transform.position.y - lastSlotItemLocalPosY) {
-        //         transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
-        //     }
-
-        //     yield return new WaitForSeconds(timeInterval);
-        // }
-        
-        
-        #endregion
         
         CalculateStoppedRow();
 
@@ -158,7 +112,7 @@ public class Reel : MonoBehaviour
     }
 
     //slotItems list에 등록된 무작위의 슬롯 아이템을 생성
-    //빈 슬롯 위치부터 위로 count개만큼 쌓아올린다!
+    //위로 count개만큼 쌓아올린다!
     private void InstantiateRandomSlotItems(int count) {
         
         //인수로 사용할 임의의 수
@@ -172,7 +126,7 @@ public class Reel : MonoBehaviour
 
             SlotItemRegisterPositions[i] = new Vector3(0, firstSlotItemLocalPosY + (slotInterval * CountSlotItemGosInChildren()), 0);
             
-            SlotItem instantiatedSlotItem = Instantiate(GetRegisteredSlotItemsFromReel(this)[randomNumber], new Vector3(), Quaternion.identity);
+            SlotItem instantiatedSlotItem = Instantiate(slotItems[randomNumber], new Vector3(), Quaternion.identity);
             instantiatedSlotItem.transform.parent = this.gameObject.transform;
             instantiatedSlotItem.transform.localPosition = SlotItemRegisterPositions[i];
            
@@ -183,7 +137,7 @@ public class Reel : MonoBehaviour
     //정지한 행(SlotItem) 구하기
     private SlotItem CalculateStoppedRow() {
 
-        StoppedSlotLocalPosY = originPosY - this.transform.position.y;
+        StoppedSlotLocalPosY = originPos.y - this.transform.position.y;
         
         SlotItem stoppedSlotItem = new SlotItem();
 
