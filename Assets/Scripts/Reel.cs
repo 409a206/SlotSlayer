@@ -87,6 +87,7 @@ public class Reel : MonoBehaviour
 
         for(int i = 0; i < spinCount; i++) {
             
+
             startPosition = this.transform.position;
             endPosition = new Vector2(transform.position.x, this.transform.position.y - slotInterval);
 
@@ -100,9 +101,10 @@ public class Reel : MonoBehaviour
 
                 yield return null;
             }
+
             
-            GameObject.Destroy(GetInstantiatedSlotItemWithIndex(-1));
             InstantiateRandomSlotItems(1);
+            GameObject.Destroy(this.GetComponentsInChildren<SlotItem>()[0].gameObject);
 
             // if(transform.position.y <= CorrespondingSlot.transform.position.y - (lastSlotItemLocalPosY - slotInterval)) {
             //         transform.position = new Vector2(transform.position.x, CorrespondingSlot.transform.position.y);
@@ -220,25 +222,6 @@ public class Reel : MonoBehaviour
         //Debug.Log(this.gameObject.name + " has " + slotItems.Length + " slot items");
 
         return slotItems.Length;
-    }
-
-    //index로 Slot Item 객채 찾기 (0은 empty slot, 1은 empty slot보다 한칸 위 ...)
-    private SlotItem GetInstantiatedSlotItemWithIndex(int index) {
-        
-        SlotItem slotItem;
-
-        SlotItem[] slotItemsInChildren = this.GetComponentsInChildren<SlotItem>() ;
-
-        for (int i = 0; i < slotItemsInChildren.Length; i++)
-        {
-            if(slotItemsInChildren[i].transform.localPosition == new Vector3(0,slotInterval * index,0)) {
-                
-                slotItem = slotItemsInChildren[i];
-                return slotItem;
-            }
-        }
-
-        return null;
     }
 
     //가장 위의 슬롯 위치 업데이트
