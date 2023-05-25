@@ -105,7 +105,7 @@ public class Reel : MonoBehaviour
         }
         
         yield return null;
-
+        
         CalculateStoppedRow();
 
         reelStopped = true;
