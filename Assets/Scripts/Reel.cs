@@ -11,8 +11,7 @@ public class Reel : MonoBehaviour
     private float timeInterval;
 
     //슬롯 아이템의 간격과 위치에 관한 변수
-    //슬롯 아이템의 초기 글로벌 좌표
-    private Vector3 originPos;
+
     //슬롯간의 간격
     [SerializeField]
     private float slotInterval = 0.75f;
@@ -49,15 +48,12 @@ public class Reel : MonoBehaviour
     void Start()
     {
         this.gameObject.transform.position = CorrespondingSlot.transform.position;
-        originPos = gameObject.transform.position;
         slotManager = GameObject.FindObjectOfType<SlotManager>();
 
 
         reelStopped = true;
         lastSlotItemLocalPosY = slotInterval * (slotItems.Count - 1);
-        // fistSlotGlobalPosY = CorrespondingSlot.transform.position.y;
-        // lastSlotGlobalPosY = fistSlotGlobalPosY - lastSlotItemLocalPosY;
-
+        
         //fortest
         slotItems.Add(Resources.Load<SlotItem>("Prefabs/Dummy/Heal"));
         slotItems.Add(Resources.Load<SlotItem>("Prefabs/Dummy/Attack"));
@@ -79,11 +75,8 @@ public class Reel : MonoBehaviour
         reelStopped = false;
 
         elapsedTime = 0f;
-        
-        Vector2 startLocalPos1 = new Vector2(0,0);
-        Vector2 endLocalPos1 = new Vector2(0,-slotInterval);
-        Vector2 startLocalPos2 = new Vector2(0,slotInterval);
-        Vector2 endLocalPos2 = new Vector2(0, 0);
+
+        SlotItem[] instantiatedSlotItems = GetComponentsInChildren<SlotItem>();
 
         for(int i = 0; i < spinCount; i++) {
             
@@ -95,17 +88,24 @@ public class Reel : MonoBehaviour
                 elapsedTime += Time.deltaTime;
                 if(elapsedTime >= lerpTime) elapsedTime = lerpTime;
                 
-                GetComponentsInChildren<SlotItem>()[0].transform.localPosition = Vector2.Lerp(new Vector2(0,0), new Vector2(0,-slotInterval), elapsedTime/lerpTime);
-                GetComponentsInChildren<SlotItem>()[1].transform.localPosition = Vector2.Lerp(new Vector2(0,slotInterval), new Vector2(0,0), elapsedTime/lerpTime);
-                GetComponentsInChildren<SlotItem>()[2].transform.localPosition = Vector2.Lerp(new Vector2(0,slotInterval * 2), new Vector2(0,slotInterval), elapsedTime/lerpTime);
+                instantiatedSlotItems = GetComponentsInChildren<SlotItem>();
+
+                for (int j = 0; j < instantiatedSlotItems.Length; j++)
+                {
+                    instantiatedSlotItems[j].transform.localPosition = 
+                        Vector2.Lerp(new Vector2(0,j * slotInterval), new Vector2(0, j * slotInterval - slotInterval), elapsedTime/lerpTime);
+                }
                 
                 yield return null;
             }
             
-            GameObject.Destroy(this.GetComponentsInChildren<SlotItem>()[0].gameObject);
+            GameObject.Destroy(instantiatedSlotItems[0].gameObject); 
             
+            yield return null;
         }
         
+        yield return null;
+
         CalculateStoppedRow();
 
         reelStopped = true;
@@ -138,7 +138,7 @@ public class Reel : MonoBehaviour
     //정지한 행(SlotItem) 구하기
     private SlotItem CalculateStoppedRow() {
 
-        SlotItem stoppedSlotItem = GetComponentsInChildren<SlotItem>()[1];
+        SlotItem stoppedSlotItem = GetComponentsInChildren<SlotItem>()[0];
 
         stoppedRow = stoppedSlotItem?.SlotItemName ?? "Null";
         
