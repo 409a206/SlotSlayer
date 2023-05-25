@@ -63,7 +63,7 @@ public class Reel : MonoBehaviour
         slotItems.Add(Resources.Load<SlotItem>("Prefabs/Dummy/Attack"));
         slotItems.Add(Resources.Load<SlotItem>("Prefabs/Dummy/Defend"));
 
-        InstantiateRandomSlotItems(1);
+        InstantiateRandomSlotItems(2);
 
         SlotManager.OnSpinButtonClicked += StartRotating;
     }
@@ -95,9 +95,10 @@ public class Reel : MonoBehaviour
                 elapsedTime += Time.deltaTime;
                 if(elapsedTime >= lerpTime) elapsedTime = lerpTime;
                 
-                GetComponentsInChildren<SlotItem>()[0].transform.localPosition = Vector2.Lerp(startLocalPos1, endLocalPos1, elapsedTime/lerpTime);
-                GetComponentsInChildren<SlotItem>()[1].transform.localPosition = Vector2.Lerp(startLocalPos2, endLocalPos2, elapsedTime/lerpTime);
-               
+                GetComponentsInChildren<SlotItem>()[0].transform.localPosition = Vector2.Lerp(new Vector2(0,0), new Vector2(0,-slotInterval), elapsedTime/lerpTime);
+                GetComponentsInChildren<SlotItem>()[1].transform.localPosition = Vector2.Lerp(new Vector2(0,slotInterval), new Vector2(0,0), elapsedTime/lerpTime);
+                GetComponentsInChildren<SlotItem>()[2].transform.localPosition = Vector2.Lerp(new Vector2(0,slotInterval * 2), new Vector2(0,slotInterval), elapsedTime/lerpTime);
+                
                 yield return null;
             }
             
@@ -137,21 +138,9 @@ public class Reel : MonoBehaviour
     //정지한 행(SlotItem) 구하기
     private SlotItem CalculateStoppedRow() {
 
-        StoppedSlotLocalPosY = originPos.y - this.transform.position.y;
-        
-        SlotItem stoppedSlotItem = new SlotItem();
+        SlotItem stoppedSlotItem = GetComponentsInChildren<SlotItem>()[1];
 
-        for (int i = 0; i < slotItems.Count; i++)
-        {
-            if(slotItems[i].transform.localPosition.y.ToString() == StoppedSlotLocalPosY.ToString()) {
-                stoppedSlotItem = slotItems[i];
-                break;
-            }
-        }
-        
         stoppedRow = stoppedSlotItem?.SlotItemName ?? "Null";
-        
-        //Debug.Log(this.name + " stoppedRow: " + stoppedRow);
         
         //Registering to delegate 'OnSpinStopped' functions to activate
         SlotManager.OnSpinStopped += stoppedSlotItem.Activate;
