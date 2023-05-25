@@ -36,8 +36,7 @@ public class SlotManager : MonoBehaviour
         if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && !resultsChecked) {
             resultsChecked = true;
             gameManager.battleManager.currentBattleState = BattleState.PLAYERACTION;
-            //OnSpinStopped?.Invoke();
-
+            
             StartCoroutine(ActivateSlotItems());
            
         }
@@ -46,7 +45,7 @@ public class SlotManager : MonoBehaviour
     private IEnumerator ActivateSlotItems() {
          foreach (Action action in OnSpinStopped.GetInvocationList())
             {
-                action.Invoke();
+                action?.Invoke();
                 OnSpinStopped -= action;
                 yield return new WaitForSeconds(2f);
             }
