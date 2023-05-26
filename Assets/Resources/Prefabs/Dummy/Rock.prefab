@@ -97,6 +97,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Rock
   unitLevel: 1
-  damage: 12
+  damage: 120
   maxHP: 100
   currentHP: 100
