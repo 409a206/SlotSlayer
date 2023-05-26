@@ -740,7 +740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spinsLeft: 3
-  totalAvailableSlotItemToSelect: 5
+  totalAvailableSlotItemsToSelect: 5
   reels:
   - {fileID: 384910104}
   - {fileID: 1708711418}

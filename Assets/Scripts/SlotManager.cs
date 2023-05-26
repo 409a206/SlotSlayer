@@ -15,10 +15,10 @@ public class SlotManager : MonoBehaviour
 
     [SerializeField]
     [Tooltip("선택할 수 있는 총 슬롯 아이템 갯수")]
-    private int totalAvailableSlotItemToSelect = 5;
+    private int totalAvailableSlotItemsToSelect = 5;
 
-    //선택된 슬롯 아이템 갯수
-    private int selectedSlotItemCount = 0;
+    //선택된 슬롯 아이템
+    private List<SlotItem> selectedSlotItems;
 
     [SerializeField]
     public Reel[] reels;
@@ -47,9 +47,9 @@ public class SlotManager : MonoBehaviour
         //모든 row들이 멈췄고 아직 result가 체크되지 않았다면
         if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped && !resultsChecked) {
             resultsChecked = true;
-            gameManager.battleManager.currentBattleState = BattleState.PLAYERACTION;
+            gameManager.battleManager.SlotItemSelection();
             
-            StartCoroutine(ActivateSlotItems());
+            //StartCoroutine(ActivateSlotItems());
            
         }
     }

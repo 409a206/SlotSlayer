@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public enum BattleState { START, PLAYERREADY, SPINNING, PLAYERACTION, ENEMYTURN, WON, LOST }
+public enum BattleState { START, PLAYERREADY, SPINNING, SPINPAUSE, PLAYERACTION, ENEMYTURN, WON, LOST }
 
 public class BattleManager : MonoBehaviour
 {
@@ -117,12 +117,13 @@ public class BattleManager : MonoBehaviour
 		currentBattleState = BattleState.PLAYERREADY;
 	}
 
+
 	IEnumerator PlayerHeal()
 	{
 		playerUnit.Heal(5);
 
 		playerHUD.SetHP(playerUnit.currentHP);
-		dialogueText.text = "You feel renewed strength!";
+		dialogueText.text = "Your HP is restored!";
 
 		yield return new WaitForSeconds(2f);
 
@@ -137,6 +138,10 @@ public class BattleManager : MonoBehaviour
 
 		//state = BattleState.ENEMYTURN;
 		//StartCoroutine(EnemyTurn());
+	}
+	public void SlotItemSelection() {
+		dialogueText.text = "Select Slot Items";
+		currentBattleState = BattleState.SPINPAUSE;
 	}
 
 	public void Attack()
