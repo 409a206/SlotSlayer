@@ -53,13 +53,21 @@ public class SlotItem : MonoBehaviour
         if(this.gameObject.transform.position == this.transform.parent.gameObject.transform.position
            && slotManager.gameManager.battleManager.currentBattleState == BattleState.SPINPAUSE){
             if(!isSelected) {
-                SlotManager.OnSpinStopped += Activate;
-                _spriteRenderer.color = new Color(originColor.r/255f,originColor.g/255f,originColor.b/255f, 100f/255f);
+                if(slotManager.selectedSlotItems.Count < slotManager.SlotItemsToSelect) {
+                    SlotManager.OnSpinStopped += Activate;
+                    slotManager.selectedSlotItems.Add(this.GetComponent<SlotItem>());
+
+                    _spriteRenderer.color = new Color(originColor.r/255f,originColor.g/255f,originColor.b/255f, 100f/255f);
+                  
+                    Debug.Log(slotManager.selectedSlotItems.Count);
+                    isSelected = !isSelected;
+                }
             } else {
                 SlotManager.OnSpinStopped -= Activate;
+                slotManager.selectedSlotItems.Remove(this.GetComponent<SlotItem>());
                 _spriteRenderer.color = originColor;
+                isSelected = !isSelected;
             }
-            isSelected = !isSelected;
         }
     }
 
