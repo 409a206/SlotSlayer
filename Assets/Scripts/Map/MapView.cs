@@ -27,5 +27,29 @@ namespace Map{
         public Color32 backgroundColor = Color.white;
         public float xSize;
         public float yOffset;
+
+        [Header("Line Settings")]
+        public GameObject linePrefab;
+        [Tooltip("Line point count should be > 2 to get smooth color gradients")]
+        [Range(3,10)]
+        public int linePointsCount = 10;
+        [Tooltip("distance from the node till the line starting point")]
+        public float offsetFromNodes = 0.5f;
+        [Header("Colors")]
+        [Tooltip("Node Visited or Attainable Color")]
+        public Color32 visitedColor = Color.white;
+        [Tooltip("Locked node color")]
+        public Color32 lockedColor = Color.grey;
+        [Tooltip("Visited or available path color")]
+        public Color32 lineVisitedColor = Color.white;
+        [Tooltip("Unavailable path color")]
+        public Color32 lineLockedColor = Color.gray;
+
+        protected GameObject firstParent;
+        protected GameObject mapParent;
+        private List<List<Point>> paths;
+        private Camera cam;
+        //All nodes:
+        public readonly List<MapNode> MapNodes = new List<MapNode>();        
     }
 }

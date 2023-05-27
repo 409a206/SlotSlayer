@@ -672,6 +672,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec9971ebde5fa848b661a8374acae8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapManager: {fileID: 2002057680}
+  orientation: 0
+  nodePrefab: {fileID: 0}
+  orientationOffset: -4
+  background: {fileID: 0}
+  backgroundColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  xSize: 0
+  yOffset: 0
 --- !u!1 &2094454760
 GameObject:
   m_ObjectHideFlags: 0
