@@ -43,28 +43,25 @@ public class SlotItem : MonoBehaviour
        originColor = _spriteRenderer.color;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnMouseDown() {
         if(this.gameObject.transform.position == this.transform.parent.gameObject.transform.position
            && slotManager.gameManager.battleManager.currentBattleState == BattleState.SPINPAUSE){
+           
+            //나중에 파일 경로및 이름 수정 필요
+            SlotItem instantiatedSlotItem = Resources.Load<SlotItem>("Prefabs/Dummy/" + this.slotItemName);
+            
             if(!isSelected) {
                 if(slotManager.selectedSlotItems.Count < slotManager.SlotItemsToSelect) {
                     SlotManager.OnSpinStopped += Activate;
-                    slotManager.selectedSlotItems.Add(this.GetComponent<SlotItem>());
-
                     _spriteRenderer.color = new Color(originColor.r/255f,originColor.g/255f,originColor.b/255f, 100f/255f);
+                    slotManager.selectedSlotItems.Add(instantiatedSlotItem);
                   
                     Debug.Log(slotManager.selectedSlotItems.Count);
                     isSelected = !isSelected;
                 }
             } else {
                 SlotManager.OnSpinStopped -= Activate;
-                slotManager.selectedSlotItems.Remove(this.GetComponent<SlotItem>());
+                slotManager.selectedSlotItems.Remove(instantiatedSlotItem);
                 _spriteRenderer.color = originColor;
                 isSelected = !isSelected;
             }

@@ -60,15 +60,15 @@ public class SlotManager : MonoBehaviour
     }
     
     private IEnumerator ActivateSlotItems() {
-            gameManager.battleManager.currentBattleState = BattleState.PLAYERACTION;
+        gameManager.battleManager.currentBattleState = BattleState.PLAYERACTION;
          foreach (Action action in OnSpinStopped?.GetInvocationList()?? new Delegate[0])
             {
                 action.Invoke();
                 OnSpinStopped -= action;
                 yield return new WaitForSeconds(intervalBetweenEachSlotActivation);
             }
-            gameManager.battleManager.currentBattleState = BattleState.ENEMYTURN;
-            gameManager.battleManager.StartEnemyTurn();
+        gameManager.battleManager.currentBattleState = BattleState.ENEMYTURN;
+        gameManager.battleManager.StartEnemyTurn();
     }
 
     //also works with finger touches
