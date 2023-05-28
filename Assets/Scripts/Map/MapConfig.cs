@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Malee;
 using OneLine;
 using UnityEngine;
 
@@ -19,8 +20,6 @@ namespace Map
             public ListOfMapLayers layers;
 
             [System.Serializable]
-            public class ListOfMapLayers {
-
-            }
+            public class ListOfMapLayers : ReorderableArray<MapLayer> {}
         }   
     }

@@ -350,6 +350,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f681d72d689c3d47a3f1c9d6d6ce5b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockAfterSelecting: 0
+  enterNodeDelay: 1
+  mapManager: {fileID: 2002057680}
+  view: {fileID: 2088784228}
 --- !u!1 &1595579303
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,7 +658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 243675e77ae2f6a46bc46630a9230bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  view: {fileID: 0}
+  view: {fileID: 2088784228}
 --- !u!1 &2088784226 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 577636332062118280, guid: 387c3a68d2999924d8423b337ce4a2f2, type: 3}
@@ -682,6 +686,21 @@ MonoBehaviour:
     rgba: 4294967295
   xSize: 0
   yOffset: 0
+  linePrefab: {fileID: 0}
+  linePointsCount: 10
+  offsetFromNodes: 0.5
+  visitedColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  lockedColor:
+    serializedVersion: 2
+    rgba: 4286611584
+  lineVisitedColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  lineLockedColor:
+    serializedVersion: 2
+    rgba: 4286611584
 --- !u!1 &2094454760
 GameObject:
   m_ObjectHideFlags: 0

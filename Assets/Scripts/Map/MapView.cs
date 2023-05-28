@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,6 +51,11 @@ namespace Map{
         private List<List<Point>> paths;
         private Camera cam;
         //All nodes:
-        public readonly List<MapNode> MapNodes = new List<MapNode>();        
+        public readonly List<MapNode> MapNodes = new List<MapNode>();
+
+        internal void ShowMap(Map map)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
