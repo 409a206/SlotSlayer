@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Map
@@ -29,10 +30,42 @@ namespace Map
 
             GenerateLayerDistances();
 
-            for (var i = 0; i < conf.layers.Count; i++)
-            {
-                
-            }
+            for (var i = 0; i < conf.layers.Count; i++) PlaceLayer(i);
+            
+            GeneratePaths();
+            RandomizeNodePositions();
+            SetUpConnections();
+            RemoveCrossConnections();
+
+            //select all the nodes with connections:
+            //var nodesList = nodes.SelectMany(n => n).Where<
+
+            return null;
+        }
+
+        private static void RemoveCrossConnections()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void SetUpConnections()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void RandomizeNodePositions()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void GeneratePaths()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void PlaceLayer(int i)
+        {
+            throw new NotImplementedException();
         }
 
         private static void GenerateLayerDistances()
