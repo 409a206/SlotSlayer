@@ -22,8 +22,8 @@ public class BattleManager : MonoBehaviour
 	public TMP_Text dialogueText;
 
     
-	Unit playerUnit;
-	Unit enemyUnit;
+	public Unit playerUnit;
+	public Unit enemyUnit;
 	
 	[HideInInspector]
 	public GameManager gameManager;
@@ -60,7 +60,7 @@ public class BattleManager : MonoBehaviour
 	{
 		bool isDead = enemyUnit.TakeDamage(playerUnit.damage);
 
-		enemyHUD.SetHP(enemyUnit.currentHP);
+		enemyHUD.SetHP(enemyUnit);
 		dialogueText.text = "The attack is successful!";
 
 		yield return new WaitForSeconds(2f);
@@ -69,11 +69,8 @@ public class BattleManager : MonoBehaviour
 		{
 			currentBattleState = BattleState.WON;
 			EndBattle();
-		} else
-		{
-			//currentBattleState = BattleState.ENEMYTURN;
-			//StartCoroutine(EnemyTurn());
 		}
+
 	}
 
 	IEnumerator EnemyTurn()
@@ -84,7 +81,7 @@ public class BattleManager : MonoBehaviour
 
 		bool isDead = playerUnit.TakeDamage(enemyUnit.damage);
 
-		playerHUD.SetHP(playerUnit.currentHP);
+		playerHUD.SetHP(playerUnit);
 
 		yield return new WaitForSeconds(1f);
 
@@ -122,7 +119,7 @@ public class BattleManager : MonoBehaviour
 	{
 		playerUnit.Heal(5);
 
-		playerHUD.SetHP(playerUnit.currentHP);
+		playerHUD.SetHP(playerUnit);
 		dialogueText.text = "Your HP is restored!";
 
 		yield return new WaitForSeconds(2f);
@@ -160,6 +157,7 @@ public class BattleManager : MonoBehaviour
 		Debug.Log("Defend!");
 	}
 	public void StartEnemyTurn() {
+		currentBattleState = BattleState.ENEMYTURN;
 		StartCoroutine(EnemyTurn());
 	}
 }

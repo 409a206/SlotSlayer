@@ -9,19 +9,21 @@ public class BattleHUD : MonoBehaviour
 
 	public TMP_Text nameTMP_Text;
 	public TMP_Text levelTMP_Text;
-	public Slider hpSlider;
+	public Image hpBar;
+	private BattleManager battleManager;
 
 	public void SetHUD(Unit unit)
 	{
 		nameTMP_Text.text = unit.unitName;
 		levelTMP_Text.text = "Lvl " + unit.unitLevel;
-		hpSlider.maxValue = unit.maxHP;
-		hpSlider.value = unit.currentHP;
+
+		battleManager = GameObject.FindObjectOfType<BattleManager>();
+		SetHP(unit);
 	}
 
-	public void SetHP(int hp)
+	public void SetHP(Unit unit)
 	{
-		hpSlider.value = hp;
+		hpBar.fillAmount = (float) unit.currentHP / (float) unit.maxHP;
 	}
 
 }
