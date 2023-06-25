@@ -106,6 +106,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotItemName: Attack
+  isSelected: 0
+  slotItemAction: 0
+  applyAmount: 10
+  slotItemAttribute: 0
+  slotItemSynergyAttributes: 
+  target: {fileID: 7421213229947102001, guid: c917673734da1bf4487d901e2b36c006, type: 3}
   code: 
   stopSound: {fileID: 0}
 --- !u!61 &1035821981685675992

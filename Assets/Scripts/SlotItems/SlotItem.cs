@@ -2,6 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SlotItemAction {
+    ATTACK, HEAL, DEFEND
+}
+
+public enum SlotItemAttribute {
+    NONE, FIRE, ICE
+}
+
+public enum SlotItemSynergyAttribute {
+    ATTACK, DARKMAGIC, WHITEMAGIC
+}
+
 //Scriptable Object로 추후 변경 필요!!
 public class SlotItem : MonoBehaviour
 {
@@ -20,6 +32,12 @@ public class SlotItem : MonoBehaviour
         set {slotItemName = value;}
     }
 
+    public SlotItemAction slotItemAction;
+    public float applyAmount;
+    public SlotItemAttribute slotItemAttribute;
+    public SlotItemSynergyAttribute[] slotItemSynergyAttributes;
+    public GameObject[] targets;
+    
     [SerializeField]
     private string code;
     

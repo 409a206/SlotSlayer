@@ -97,6 +97,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotItemName: Heal
+  isSelected: 0
+  slotItemAction: 1
+  slotItemAttribute: 0
+  slotItemSynergyAttributes: 
   code: 
   stopSound: {fileID: 0}
 --- !u!61 &6287140847265705309

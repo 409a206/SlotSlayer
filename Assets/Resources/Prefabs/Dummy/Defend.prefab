@@ -97,6 +97,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotItemName: Defend
+  isSelected: 0
+  slotItemAction: 2
+  slotItemAttribute: 0
+  slotItemSynergyAttributes: 
   code: 
   stopSound: {fileID: 0}
 --- !u!61 &517989463673463745
