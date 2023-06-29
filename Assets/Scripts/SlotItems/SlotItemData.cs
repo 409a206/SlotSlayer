@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "Slot Item", menuName = "Scriptable Object/Slot Item Data", order = int.MaxValue)]
+public class SlotItemData : ScriptableObject
+{
+    [SerializeField]
+    private string slotItemName;
+
+    public string SlotItemName {
+        get {return slotItemName;}
+        set {slotItemName = value;}
+    }
+
+    public SlotItemAction slotItemAction;
+    public float applyAmount;
+    public SlotItemAttribute slotItemAttribute;
+    public SlotItemSynergyAttribute[] slotItemSynergyAttributes;
+    
+    [SerializeField]
+    private string code;
+    
+    [SerializeField]
+    AudioClip stopSound;
+
+    //컴포넌트 변수
+    private BoxCollider2D _boxCollider2D;
+    private SpriteRenderer _spriteRenderer;
+    private Color originColor;
+
+    //레퍼런스 변수
+    protected SlotManager slotManager;
+}
