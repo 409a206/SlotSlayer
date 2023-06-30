@@ -2,23 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SlotItemAction {
-    ATTACK, HEAL, DEFEND
-}
 
-public enum SlotItemAttribute {
-    NONE, FIRE, ICE
-}
-
-public enum SlotItemSynergyAttribute {
-    ATTACK, DARKMAGIC, WHITEMAGIC
-}
 
 //Scriptable Object로 추후 변경 필요!!
 public class SlotItem : MonoBehaviour
 {
-    [SerializeField]
-    private string slotItemName;
+    public SlotItemData slotItemData;
 
     [SerializeField]
     private bool isSelected = false;
@@ -26,23 +15,8 @@ public class SlotItem : MonoBehaviour
         get {return isSelected;}
         set {isSelected = value;}
     }
-
-    public string SlotItemName {
-        get {return slotItemName;}
-        set {slotItemName = value;}
-    }
-
-    public SlotItemAction slotItemAction;
-    public float applyAmount;
-    public SlotItemAttribute slotItemAttribute;
-    public SlotItemSynergyAttribute[] slotItemSynergyAttributes;
+    
     public GameObject[] targets;
-    
-    [SerializeField]
-    private string code;
-    
-    [SerializeField]
-    AudioClip stopSound;
 
     //컴포넌트 변수
     private BoxCollider2D _boxCollider2D;
@@ -66,7 +40,7 @@ public class SlotItem : MonoBehaviour
            && slotManager.gameManager.battleManager.currentBattleState == BattleState.SPINPAUSE){
            
             //나중에 파일 경로및 이름 수정 필요
-            SlotItem instantiatedSlotItem = Resources.Load<SlotItem>("Prefabs/Dummy/" + this.slotItemName);
+            SlotItem instantiatedSlotItem = Resources.Load<SlotItem>("Prefabs/Dummy/" + this.slotItemData.SlotItemName);
             
             if(!isSelected) {
                 if(slotManager.selectedSlotItems.Count < slotManager.SlotItemsToSelect) {
