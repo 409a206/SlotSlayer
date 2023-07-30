@@ -96,13 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b76032536f90549aa39effc5bef05f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotItemName: Heal
+  slotItemData: {fileID: 11400000, guid: ae3e1c68dc63991438a1ebb3198d2fa5, type: 2}
   isSelected: 0
-  slotItemAction: 1
-  slotItemAttribute: 0
-  slotItemSynergyAttributes: 
-  code: 
-  stopSound: {fileID: 0}
+  targets: []
 --- !u!61 &6287140847265705309
 BoxCollider2D:
   m_ObjectHideFlags: 0

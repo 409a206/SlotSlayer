@@ -105,15 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed3b9df0f19790045bdb6787cc0df7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotItemName: Attack
+  slotItemData: {fileID: 11400000, guid: 1194172c455e50e42a98c0dfbc6673b4, type: 2}
   isSelected: 0
-  slotItemAction: 0
-  applyAmount: 10
-  slotItemAttribute: 0
-  slotItemSynergyAttributes: 
-  target: {fileID: 7421213229947102001, guid: c917673734da1bf4487d901e2b36c006, type: 3}
-  code: 
-  stopSound: {fileID: 0}
+  targets: []
 --- !u!61 &1035821981685675992
 BoxCollider2D:
   m_ObjectHideFlags: 0

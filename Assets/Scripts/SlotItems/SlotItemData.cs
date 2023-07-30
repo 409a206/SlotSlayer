@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SlotItemAction {
-    ATTACK, HEAL, DEFEND
-}
+// public enum SlotItemAction {
+//     ATTACK, HEAL, DEFEND
+// }
 
 public enum SlotItemAttribute {
     NONE, FIRE, ICE
@@ -14,6 +15,7 @@ public enum SlotItemSynergyAttribute {
     ATTACK, DARKMAGIC, WHITEMAGIC
 }
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "Slot Item", menuName = "Scriptable Object/Slot Item Data", order = int.MaxValue)]
 public class SlotItemData : ScriptableObject
 {
@@ -29,6 +31,7 @@ public class SlotItemData : ScriptableObject
     public float applyAmount;
     public SlotItemAttribute slotItemAttribute;
     public SlotItemSynergyAttribute[] slotItemSynergyAttributes;
+    public SpriteRenderer spriteRenderer;
     
     [SerializeField]
     private string code;

@@ -134,7 +134,7 @@ public class Reel : MonoBehaviour
 
         SlotItem stoppedSlotItem = GetComponentsInChildren<SlotItem>()[0];
 
-        stoppedRow = stoppedSlotItem?.SlotItemName ?? "Null";
+        stoppedRow = stoppedSlotItem?.slotItemData.SlotItemName ?? "Null";
         
         //Registering to delegate 'OnSpinStopped' functions to activate
         SlotManager.OnSpinStopped += stoppedSlotItem.Activate;

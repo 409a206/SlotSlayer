@@ -13,12 +13,7 @@ public class SlotItemSpawner : MonoBehaviour
     private List<SlotItemData> slotItemDatas;
     [SerializeField]
     private GameObject slotItemPrefab;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    
     public SlotItem SpawnSlotItem(SlotItemType slotItemType) {
         var newSlotItem = Instantiate(slotItemPrefab).GetComponent<SlotItem>();
         newSlotItem.slotItemData = slotItemDatas[(int)slotItemType];
