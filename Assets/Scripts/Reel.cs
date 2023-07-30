@@ -34,24 +34,34 @@ public class Reel : MonoBehaviour
     private SlotManager slotManager;
     //corresponding empty slot
     [SerializeField]
-    private GameObject CorrespondingSlot;
+    private GameObject correspondingSlot;
     //릴에 할당되어있는 슬롯 아이템의 리스트
     [SerializeField]
     private List<SlotItem> slotItems;
 
     void Start()
     {
-        this.gameObject.transform.position = CorrespondingSlot.transform.position;
+        this.gameObject.transform.position = correspondingSlot.transform.position;
         slotManager = GameObject.FindObjectOfType<SlotManager>();
 
 
         reelStopped = true;
         lastSlotItemLocalPosY = slotInterval * (slotItems.Count - 1);
         
-        //fortest
-        slotItems.Add(Resources.Load<SlotItem>("Prefabs/Dummy/Heal"));
-        slotItems.Add(Resources.Load<SlotItem>("Prefabs/Dummy/Attack"));
-        slotItems.Add(Resources.Load<SlotItem>("Prefabs/Dummy/Defend"));
+        //테스트용으로 릴에 슬롯 아이템 등록
+        SlotItem defend = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItem");
+        defend.slotItemData = Resources.Load<SlotItemData>("Scriptable Objects/Dummy/Defend");
+        SlotItem heal = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItem");
+        defend.slotItemData = Resources.Load<SlotItemData>("Scriptable Objects/Dummy/Heal");
+        SlotItem attack = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItem");
+        defend.slotItemData = Resources.Load<SlotItemData>("Scriptable Objects/Dummy/Attack");
+        slotItems.Add(defend);
+        slotItems.Add(heal);
+        slotItems.Add(attack);
+        // slotItems.Add(Resources.Load<SlotItem>("Prefabs/Dummy/SlotItem"));
+        // slotItems.Add(Resources.Load<SlotItem>("Prefabs/Dummy/SlotItem"));
+        // slotItems.Add(Resources.Load<SlotItem>("Prefabs/Dummy/SlotItem"));
+        //
 
         InstantiateRandomSlotItems(2);
 

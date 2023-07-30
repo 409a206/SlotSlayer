@@ -27,12 +27,13 @@ public class SlotItem : MonoBehaviour
     protected SlotManager slotManager;
     
     
-    void Start()
+    void Awake()
     {
        slotManager = FindObjectOfType<SlotManager>();
        _boxCollider2D = this.GetComponent<BoxCollider2D>();
        _spriteRenderer = this.GetComponent<SpriteRenderer>();
        originColor = _spriteRenderer.color;
+       _spriteRenderer.sprite = slotItemData.sprite;
     }
 
     private void OnMouseDown() {

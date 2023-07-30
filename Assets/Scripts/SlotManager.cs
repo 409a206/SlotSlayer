@@ -59,6 +59,7 @@ public class SlotManager : MonoBehaviour
         }
     }
     
+    //슬롯 아이템 활성화 코루틴
     private IEnumerator ActivateSlotItems() {
         gameManager.battleManager.currentBattleState = BattleState.PLAYERACTION;
          foreach (Action action in OnSpinStopped?.GetInvocationList()?? new Delegate[0])
@@ -77,12 +78,15 @@ public class SlotManager : MonoBehaviour
     public void Spin() {
         if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped 
            && (gameManager.battleManager.currentBattleState == BattleState.PLAYERREADY || gameManager.battleManager.currentBattleState == BattleState.SPINPAUSE)) {
+            //만약 남은 스핀 횟수가 0보다 크다면 스핀하는 로직
             if(spinsLeft > 0) {
                 spinsLeft--;
                 Debug.Log("spins left: " + spinsLeft);
                 gameManager.battleManager.currentBattleState = BattleState.SPINNING;
                 OnSpinButtonClicked?.Invoke();
-            } else {
+            } 
+            //만약 남은 스핀 횟수가 0이라면 선택된 슬롯 아이템 활성화 로직
+            else {
                 StartCoroutine(ActivateSlotItems());
                 spinsLeft = 3;
                 selectedSlotItems.Clear();
