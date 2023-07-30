@@ -16,6 +16,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3775801270797017419, guid: bca3b323383e8924e9a1392596278cdb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.08684228
+      objectReference: {fileID: 0}
+    - target: {fileID: 3775801270797017419, guid: bca3b323383e8924e9a1392596278cdb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.09197392
+      objectReference: {fileID: 0}
+    - target: {fileID: 3775801270797017419, guid: bca3b323383e8924e9a1392596278cdb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3775801270797017419, guid: bca3b323383e8924e9a1392596278cdb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -75,6 +87,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb81ef8d0cff91d4793a8acc52f15cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotItemData: {fileID: 0}
+  slotItemData: {fileID: 11400000, guid: 1194172c455e50e42a98c0dfbc6673b4, type: 2}
   isSelected: 0
   targets: []

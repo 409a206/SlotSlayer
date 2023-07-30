@@ -31,7 +31,6 @@ public class SlotItemData : ScriptableObject
     public float applyAmount;
     public SlotItemAttribute slotItemAttribute;
     public SlotItemSynergyAttribute[] slotItemSynergyAttributes;
-    public Sprite sprite;
     
     [SerializeField]
     private string code;

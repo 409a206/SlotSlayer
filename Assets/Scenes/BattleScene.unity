@@ -568,7 +568,6 @@ GameObject:
   m_Component:
   - component: {fileID: 384910103}
   - component: {fileID: 384910104}
-  - component: {fileID: 384910105}
   m_Layer: 0
   m_Name: Reel1
   m_TagString: Untagged
@@ -607,22 +606,8 @@ MonoBehaviour:
   spinCount: 30
   reelStopped: 0
   stoppedRow: 
-  CorrespondingSlot: {fileID: 569974743}
+  correspondingSlot: {fileID: 569974743}
   slotItems: []
---- !u!114 &384910105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 384910102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb3a7342224b1e146b04c4dbf72549ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotItemDatas: []
-  slotItemPrefab: {fileID: 0}
 --- !u!1 &387396291
 GameObject:
   m_ObjectHideFlags: 0
@@ -1597,7 +1582,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1269352151}
   - component: {fileID: 1269352152}
-  - component: {fileID: 1269352153}
   m_Layer: 0
   m_Name: Reel3
   m_TagString: Untagged
@@ -1636,22 +1620,8 @@ MonoBehaviour:
   spinCount: 50
   reelStopped: 0
   stoppedRow: 
-  CorrespondingSlot: {fileID: 826591224}
+  correspondingSlot: {fileID: 826591224}
   slotItems: []
---- !u!114 &1269352153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269352150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb3a7342224b1e146b04c4dbf72549ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotItemDatas: []
-  slotItemPrefab: {fileID: 0}
 --- !u!1 &1312604278
 GameObject:
   m_ObjectHideFlags: 0
@@ -2517,7 +2487,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1708711417}
   - component: {fileID: 1708711418}
-  - component: {fileID: 1708711419}
   m_Layer: 0
   m_Name: Reel2
   m_TagString: Untagged
@@ -2556,22 +2525,8 @@ MonoBehaviour:
   spinCount: 40
   reelStopped: 0
   stoppedRow: 
-  CorrespondingSlot: {fileID: 1476687524}
+  correspondingSlot: {fileID: 1476687524}
   slotItems: []
---- !u!114 &1708711419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1708711416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb3a7342224b1e146b04c4dbf72549ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotItemDatas: []
-  slotItemPrefab: {fileID: 0}
 --- !u!1 &1740356932
 GameObject:
   m_ObjectHideFlags: 0

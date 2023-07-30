@@ -49,12 +49,15 @@ public class Reel : MonoBehaviour
         lastSlotItemLocalPosY = slotInterval * (slotItems.Count - 1);
         
         //테스트용으로 릴에 슬롯 아이템 등록
-        SlotItem defend = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItem");
+        SlotItem defend = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItems/Defend");
         defend.slotItemData = Resources.Load<SlotItemData>("Scriptable Objects/Dummy/Defend");
-        SlotItem heal = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItem");
-        defend.slotItemData = Resources.Load<SlotItemData>("Scriptable Objects/Dummy/Heal");
-        SlotItem attack = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItem");
-        defend.slotItemData = Resources.Load<SlotItemData>("Scriptable Objects/Dummy/Attack");
+       
+        SlotItem heal = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItems/Heal");
+        heal.slotItemData = Resources.Load<SlotItemData>("Scriptable Objects/Dummy/Heal");
+      
+        SlotItem attack = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItems/Attack");
+        attack.slotItemData = Resources.Load<SlotItemData>("Scriptable Objects/Dummy/Attack");
+        
         slotItems.Add(defend);
         slotItems.Add(heal);
         slotItems.Add(attack);

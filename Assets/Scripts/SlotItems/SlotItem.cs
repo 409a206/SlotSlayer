@@ -33,7 +33,6 @@ public class SlotItem : MonoBehaviour
        _boxCollider2D = this.GetComponent<BoxCollider2D>();
        _spriteRenderer = this.GetComponent<SpriteRenderer>();
        originColor = _spriteRenderer.color;
-       _spriteRenderer.sprite = slotItemData.sprite;
     }
 
     private void OnMouseDown() {
