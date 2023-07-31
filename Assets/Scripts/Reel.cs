@@ -137,7 +137,6 @@ public class Reel : MonoBehaviour
             SlotItem instantiatedSlotItem = Instantiate(slotItems[randomNumber], new Vector3(), Quaternion.identity);
             instantiatedSlotItem.transform.parent = this.gameObject.transform;
             instantiatedSlotItem.transform.localPosition = SlotItemRegisterPositions[i];
-           
             UpdateSlotData();
         }
     }

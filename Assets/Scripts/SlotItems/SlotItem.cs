@@ -14,6 +14,7 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         get {return isSelected;}
         set {isSelected = value;}
     }
+    private bool isOnCorrespondingSlot = false;
     private Vector3 originPos;
     
     public GameObject[] targets;
@@ -29,7 +30,6 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     
     void Awake()
     {
-       originPos = this.transform.position;
        slotManager = FindObjectOfType<SlotManager>();
        _boxCollider2D = this.GetComponent<BoxCollider2D>();
        _spriteRenderer = this.GetComponent<SpriteRenderer>();
@@ -74,16 +74,45 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     public void OnDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnDrag Called");
+       if(isOnCorrespondingSlot && slotManager.gameManager.battleManager.currentBattleState == BattleState.SPINPAUSE) {
+           Vector3 mouseWorldPosition = slotManager.gameManager.mainCamera.ScreenToWorldPoint(Input.mousePosition);
+           transform.position = new Vector3(mouseWorldPosition.x, mouseWorldPosition.y, 0f);
+           this._spriteRenderer.maskInteraction = SpriteMaskInteraction.None;
+       }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnBeginDrag Called");
+        if(slotManager.gameManager.battleManager.currentBattleState == BattleState.SPINPAUSE) {
+            originPos = this.transform.position;
+            if(this.transform.position == this.transform.parent.gameObject.transform.position) {
+                isOnCorrespondingSlot = true;
+            } else {
+                isOnCorrespondingSlot = false;
+            }
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnEndDrag Called");
+        if(isOnCorrespondingSlot && slotManager.gameManager.battleManager.currentBattleState == BattleState.SPINPAUSE) {
+            //Debug.Log("OnEndDrag Called");
+            transform.position = originPos;
+            this._spriteRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+
+            //나중에 파일 경로및 이름 수정 필요
+            SlotItem instantiatedSlotItem = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItems/Instantiated SlotItems/" + this.slotItemData.SlotItemName);
+            
+            if(!isSelected) {
+                if(slotManager.selectedSlotItems.Count < slotManager.SlotItemsToSelect) {
+                    SlotManager.OnSpinStopped += Activate;
+                    slotManager.selectedSlotItems.Add(instantiatedSlotItem);
+                  
+                    Debug.Log(slotManager.selectedSlotItems.Count);
+                    isSelected = !isSelected;
+                    _spriteRenderer.color = new Color(originColor.r/255f,originColor.g/255f,originColor.b/255f, 0f);
+                }
+            } 
+        }
     }
 }
