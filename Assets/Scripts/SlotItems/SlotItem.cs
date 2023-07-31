@@ -8,6 +8,7 @@ using UnityEngine;
 public class SlotItem : MonoBehaviour
 {
     public SlotItemData slotItemData;
+    private SlotItemAction slotItemAction = new SlotItemAction();
 
     [SerializeField]
     private bool isSelected = false;
@@ -33,6 +34,7 @@ public class SlotItem : MonoBehaviour
        _boxCollider2D = this.GetComponent<BoxCollider2D>();
        _spriteRenderer = this.GetComponent<SpriteRenderer>();
        originColor = _spriteRenderer.color;
+       slotItemAction = new SlotItemAction();
     }
 
     private void OnMouseDown() {
@@ -44,8 +46,8 @@ public class SlotItem : MonoBehaviour
             
             if(!isSelected) {
                 if(slotManager.selectedSlotItems.Count < slotManager.SlotItemsToSelect) {
-                    //SlotManager.OnSpinStopped += Activate;
-                    slotManager.RegisterToOnSpinStopped(slotItemData.actionType);
+                    SlotManager.OnSpinStopped += Activate;
+                    //instantiatedSlotItem.RegisterToOnSpinStopped();
                     _spriteRenderer.color = new Color(originColor.r/255f,originColor.g/255f,originColor.b/255f, 100f/255f);
                     slotManager.selectedSlotItems.Add(instantiatedSlotItem);
                   
@@ -53,8 +55,8 @@ public class SlotItem : MonoBehaviour
                     isSelected = !isSelected;
                 }
             } else {
-                //SlotManager.OnSpinStopped -= Activate;
-                slotManager.UnregisterFromOnSpinStopped(slotItemData.actionType);
+                SlotManager.OnSpinStopped -= Activate;
+                //instantiatedSlotItem.UnregisterFromOnSpinStopped();
                 slotManager.selectedSlotItems.Remove(instantiatedSlotItem);
                 _spriteRenderer.color = originColor;
                 Debug.Log(slotManager.selectedSlotItems.Count);
@@ -62,6 +64,14 @@ public class SlotItem : MonoBehaviour
             }
         }
     }
-
-    public virtual void Activate() {}
+    
+    public void Activate() {
+        switch (slotItemData.actionType)
+        {
+            case ActionType.ATTACK: slotManager.gameManager.battleManager.Attack(); return;
+            case ActionType.DEFEND: slotManager.gameManager.battleManager.Defend(); return;
+            case ActionType.HEAL: slotManager.gameManager.battleManager.Heal(); return;
+            default: return;
+        }
+    }
 }
