@@ -108,7 +108,7 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                     SlotManager.OnSpinStopped += Activate;
                     slotManager.selectedSlotItems.Add(instantiatedSlotItem);
                   
-                    Debug.Log(slotManager.selectedSlotItems.Count);
+                    Debug.Log(slotManager.selectedSlotItems.Count); 
                     isSelected = !isSelected;
                     _spriteRenderer.color = new Color(originColor.r/255f,originColor.g/255f,originColor.b/255f, 0f);
                 }
