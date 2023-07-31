@@ -94,25 +94,4 @@ public class SlotManager : MonoBehaviour
             }
         }
     }
-
-    /*
-    //also works with finger touches
-    //mobile touch function is recommended for more complicated uses
-    private void OnMouseDown() {
-        if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped 
-           && (gameManager.battleManager.currentBattleState == BattleState.PLAYERREADY || gameManager.battleManager.currentBattleState == BattleState.SPINPAUSE)) {
-            if(spinsLeft > 0) {
-                spinsLeft--;
-                Debug.Log("spins left: " + spinsLeft);
-                gameManager.battleManager.currentBattleState = BattleState.SPINNING;
-                OnSpinButtonClicked?.Invoke();
-            } else {
-                StartCoroutine(ActivateSlotItems());
-                spinsLeft = 3;
-                selectedSlotItems.Clear();
-                OnSpinStopped -= OnSpinStopped;
-            }
-        }
-    }
-    */
 }
