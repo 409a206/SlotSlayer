@@ -8,8 +8,6 @@ using UnityEngine;
 public class SlotItem : MonoBehaviour
 {
     public SlotItemData slotItemData;
-    private SlotItemAction slotItemAction = new SlotItemAction();
-
     [SerializeField]
     private bool isSelected = false;
     public bool IsSelected {
@@ -34,7 +32,6 @@ public class SlotItem : MonoBehaviour
        _boxCollider2D = this.GetComponent<BoxCollider2D>();
        _spriteRenderer = this.GetComponent<SpriteRenderer>();
        originColor = _spriteRenderer.color;
-       slotItemAction = new SlotItemAction();
     }
 
     private void OnMouseDown() {
@@ -64,7 +61,7 @@ public class SlotItem : MonoBehaviour
             }
         }
     }
-    
+
     public void Activate() {
         switch (slotItemData.actionType)
         {

@@ -9,7 +9,6 @@ public class SlotManager : MonoBehaviour
     public static event Action OnSpinButtonClicked;
     public static event Action OnSpinStopped;
 
-    private SlotItemAction slotItemAction = new SlotItemAction();
     [SerializeField]
     [Tooltip("남은 스핀 횟수")]
     private int spinsLeft = 3;
