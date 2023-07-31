@@ -6,7 +6,7 @@ public class SlotItemAction
 {
     SlotManager slotManager;
 
-    private void Defend() {
+    public void Defend() {
       slotManager.gameManager.battleManager.Defend();
     }
 
@@ -14,7 +14,7 @@ public class SlotItemAction
         slotManager.gameManager.battleManager.Attack();
     }
 
-    private void Heal() {
+    public void Heal() {
         slotManager.gameManager.battleManager.Heal();
     }
 }

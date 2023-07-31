@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// public enum SlotItemAction {
-//     ATTACK, HEAL, DEFEND
-// }
+public enum ActionType {
+    ATTACK, HEAL, DEFEND
+}
 
 public enum SlotItemAttribute {
     NONE, FIRE, ICE
@@ -27,7 +27,7 @@ public class SlotItemData : ScriptableObject
         set {slotItemName = value;}
     }
 
-    public SlotItemAction slotItemAction;
+    public ActionType actionType;
     public float applyAmount;
     public SlotItemAttribute slotItemAttribute;
     public SlotItemSynergyAttribute[] slotItemSynergyAttributes;

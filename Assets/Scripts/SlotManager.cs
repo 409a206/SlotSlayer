@@ -9,6 +9,7 @@ public class SlotManager : MonoBehaviour
     public static event Action OnSpinButtonClicked;
     public static event Action OnSpinStopped;
 
+    private SlotItemAction slotItemAction;
     [SerializeField]
     [Tooltip("남은 스핀 횟수")]
     private int spinsLeft = 3;
@@ -92,6 +93,28 @@ public class SlotManager : MonoBehaviour
                 selectedSlotItems.Clear();
                 OnSpinStopped -= OnSpinStopped;
             }
+        }
+    }
+
+    //registering activation function to OnSpinStopped Delegate 
+    public void RegisterToOnSpinStopped(ActionType actionType) {
+        switch (actionType)
+        {
+            case ActionType.ATTACK: OnSpinStopped += slotItemAction.Attack; return;
+            case ActionType.DEFEND: OnSpinStopped += slotItemAction.Defend; return;
+            case ActionType.HEAL: OnSpinStopped += slotItemAction.Heal; return;
+            default: return;
+        }
+    }
+
+    //unregistering activation function from OnSpinStopped Delegate 
+    public void UnregisterFromOnSpinStopped(ActionType actionType) {
+        switch (actionType)
+        {
+            case ActionType.ATTACK: OnSpinStopped -= slotItemAction.Attack; return;
+            case ActionType.DEFEND: OnSpinStopped -= slotItemAction.Defend; return;
+            case ActionType.HEAL: OnSpinStopped -= slotItemAction.Heal; return;
+            default: return;
         }
     }
 

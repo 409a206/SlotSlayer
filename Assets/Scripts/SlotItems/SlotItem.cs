@@ -40,11 +40,12 @@ public class SlotItem : MonoBehaviour
            && slotManager.gameManager.battleManager.currentBattleState == BattleState.SPINPAUSE){
            
             //나중에 파일 경로및 이름 수정 필요
-            SlotItem instantiatedSlotItem = Resources.Load<SlotItem>("Prefabs/Dummy/" + this.slotItemData.SlotItemName);
+            SlotItem instantiatedSlotItem = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItems/Instantiated SlotItems/" + this.slotItemData.SlotItemName);
             
             if(!isSelected) {
                 if(slotManager.selectedSlotItems.Count < slotManager.SlotItemsToSelect) {
-                    SlotManager.OnSpinStopped += Activate;
+                    //SlotManager.OnSpinStopped += Activate;
+                    slotManager.RegisterToOnSpinStopped(slotItemData.actionType);
                     _spriteRenderer.color = new Color(originColor.r/255f,originColor.g/255f,originColor.b/255f, 100f/255f);
                     slotManager.selectedSlotItems.Add(instantiatedSlotItem);
                   
@@ -52,9 +53,11 @@ public class SlotItem : MonoBehaviour
                     isSelected = !isSelected;
                 }
             } else {
-                SlotManager.OnSpinStopped -= Activate;
+                //SlotManager.OnSpinStopped -= Activate;
+                slotManager.UnregisterFromOnSpinStopped(slotItemData.actionType);
                 slotManager.selectedSlotItems.Remove(instantiatedSlotItem);
                 _spriteRenderer.color = originColor;
+                Debug.Log(slotManager.selectedSlotItems.Count);
                 isSelected = !isSelected;
             }
         }
