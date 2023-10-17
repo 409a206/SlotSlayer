@@ -21,6 +21,7 @@ public class BattleManager : MonoBehaviour
     
 	public TMP_Text dialogueText;
 
+	public GameObject BattleResultPanel;
     
 	public Unit playerUnit;
 	public Unit enemyUnit;
@@ -56,20 +57,29 @@ public class BattleManager : MonoBehaviour
 
 		PlayerTurn();
     }
+	void PlayerTurn()
+	{
+		dialogueText.text = "Ready To Spin!";
+		currentBattleState = BattleState.PLAYERREADY;
+	}
+
 	IEnumerator PlayerAttack()
 	{
+		
 		bool isDead = enemyUnit.TakeDamage(playerUnit.damage);
+		
+		//Debug.Log("isEnemyDead: " + isDead);
 
 		enemyHUD.SetHP(enemyUnit);
 		dialogueText.text = "The attack is successful!";
 
 		yield return new WaitForSeconds(2f);
 
-		if(isDead)
-		{
-			currentBattleState = BattleState.WON;
-			EndBattle();
-		}
+		// if(isDead)
+		// {
+		// 	currentBattleState = BattleState.WON;
+		// 	EndBattle();
+		// }
 
 	}
 
@@ -97,25 +107,30 @@ public class BattleManager : MonoBehaviour
 
 	}
 
-	void EndBattle()
+	public void EndBattle()
 	{
 		if(currentBattleState == BattleState.WON)
 		{
-			dialogueText.text = "You won the battle!";
+			//dialogueText.text = "You won the battle!";
 		} else if (currentBattleState == BattleState.LOST)
 		{
-			dialogueText.text = "You were defeated.";
+			//dialogueText.text = "You were defeated.";
 		}
+
+		OpenBattleResultWindow(currentBattleState);
 	}
 
-	void PlayerTurn()
-	{
-		dialogueText.text = "Ready To Spin!";
-		currentBattleState = BattleState.PLAYERREADY;
-	}
+    private void OpenBattleResultWindow(BattleState currentBattleState)
+    {
+		BattleResultPanel.SetActive(true);
+		if(currentBattleState == BattleState.WON) {
+			BattleResultPanel.GetComponentInChildren<TMPro.TMP_Text>().text = "Congratulations! You Won!";
+		} else if (currentBattleState == BattleState.LOST) {
+			BattleResultPanel.GetComponentInChildren<TMPro.TMP_Text>().text = "Too Bad. You Lost";
+		}
+    }
 
-
-	IEnumerator PlayerHeal()
+    IEnumerator PlayerHeal()
 	{
 		playerUnit.Heal(5);
 

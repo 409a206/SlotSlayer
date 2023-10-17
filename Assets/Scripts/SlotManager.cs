@@ -72,6 +72,9 @@ public class SlotManager : MonoBehaviour
         if(gameManager.battleManager.enemyUnit.currentHP > 0) {
             gameManager.battleManager.currentBattleState = BattleState.ENEMYTURN;
             gameManager.battleManager.StartEnemyTurn();
+        } else {
+            gameManager.battleManager.currentBattleState = BattleState.WON;
+            gameManager.battleManager.EndBattle();
         }
     }
 

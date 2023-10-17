@@ -16,6 +16,7 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     }
     private bool isOnCorrespondingSlot = false;
     private Vector3 originPos;
+    private Vector3 onDragEndPos;
     
     public GameObject[] targets;
 
@@ -95,24 +96,43 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        onDragEndPos = this.transform.position;
+
         if(isOnCorrespondingSlot && slotManager.gameManager.battleManager.currentBattleState == BattleState.SPINPAUSE) {
+
             //Debug.Log("OnEndDrag Called");
+            
+            
             transform.position = originPos;
             this._spriteRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
 
-            //나중에 파일 경로및 이름 수정 필요
-            SlotItem instantiatedSlotItem = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItems/Instantiated SlotItems/" + this.slotItemData.SlotItemName);
             
-            if(!isSelected) {
+            if(!isSelected && CalculateYDistFromOriginPos() > 2.0f) {
                 if(slotManager.selectedSlotItems.Count < slotManager.SlotItemsToSelect) {
                     SlotManager.OnSpinStopped += Activate;
+                    
+                    //나중에 파일 경로및 이름 수정 필요
+                    SlotItem instantiatedSlotItem = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItems/Instantiated SlotItems/" + this.slotItemData.SlotItemName);
+                    
                     slotManager.selectedSlotItems.Add(instantiatedSlotItem);
-                  
+
                     Debug.Log(slotManager.selectedSlotItems.Count); 
                     isSelected = !isSelected;
                     _spriteRenderer.color = new Color(originColor.r/255f,originColor.g/255f,originColor.b/255f, 0f);
                 }
             } 
+            
         }
+    }
+
+    //SlotItem이 슬롯으로부터 얼마나 드래그 되었는지 확인하는 함수.
+    public float CalculateYDistFromOriginPos() {
+        float yDistFromOriginPos = 0f;
+        
+        yDistFromOriginPos = onDragEndPos.y- originPos.y;
+
+        Debug.Log("yDistFromOriginPos: " + yDistFromOriginPos);
+
+        return yDistFromOriginPos;
     }
 }
