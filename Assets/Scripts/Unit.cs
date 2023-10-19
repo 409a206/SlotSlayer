@@ -15,6 +15,12 @@ public class Unit : MonoBehaviour
 	public int maxHP;
 	public int currentHP;
 
+	protected BattleManager battleManager;
+
+	private void Awake() {
+		battleManager = FindObjectOfType<BattleManager>();
+	}
+
 	public bool TakeDamage(int dmg)
 	{
 

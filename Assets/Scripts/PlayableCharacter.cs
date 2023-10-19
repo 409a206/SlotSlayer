@@ -3,24 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayableCharacter : Unit, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class PlayableCharacter : Unit
 {
+
+    private bool isControllable = false;
     void Attack(Enemy target) {
 
     }
-     public void OnDrag(PointerEventData eventData)
-    {
-        Debug.Log("PlayableCharacter.OnDrag() called");
-    }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
+    private void OnMouseDown() {
+        Debug.Log("OnMouseDown Called");
         GameObject reticleGo = Resources.Load<GameObject>("Prefabs/Dummy/Reticle");
-        Debug.Log("PlayableCharacter.OnBeginDrag() called");
+        reticleGo.transform.position = Vector3.zero;
     }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        Debug.Log("PlayableCharacter.OnEndDrag() called");
+    private void OnMouseDrag() {
+        Debug.Log("OnMouseDrag Called");
+    }
+
+    private void OnMouseUp() {
+        Debug.Log("OnMouseUp Called");
     }
 }
