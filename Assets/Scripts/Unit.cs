@@ -1,21 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 //needs to be customized
 public class Unit : MonoBehaviour
 {
 	public string unitName;
-	public int unitLevel;
-
-	public int damage;
+	
+	
+	public int damage = 0;
+	public int defence = 0;
 
 	public int maxHP;
 	public int currentHP;
 
 	public bool TakeDamage(int dmg)
 	{
-		currentHP -= dmg;
+
+		defence -= dmg;
+
+		if(defence < 0) {
+			currentHP += defence;
+			defence = 0;
+		}
+
 
 		if (currentHP <= 0)
 			return true;
@@ -29,4 +38,6 @@ public class Unit : MonoBehaviour
 		if (currentHP > maxHP)
 			currentHP = maxHP;
 	}
+
+   
 }

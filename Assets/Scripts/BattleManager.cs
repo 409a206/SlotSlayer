@@ -9,11 +9,13 @@ public enum BattleState { START, PLAYERREADY, SPINNING, SPINPAUSE, PLAYERACTION,
 
 public class BattleManager : MonoBehaviour
 {
+
     public BattleState currentBattleState;
     
 	public GameObject playerPrefab;
 	public GameObject enemyPrefab;
-    
+	public GameObject battleStateCanvas;
+
 	public BattleHUD playerHUD;
 	public BattleHUD enemyHUD;
 	public Transform playerBattleStation;
@@ -36,6 +38,7 @@ public class BattleManager : MonoBehaviour
 		gameManager = FindObjectOfType<GameManager>();
         currentBattleState = BattleState.START;
         StartCoroutine(SetupBattle());
+		
     }
 
     IEnumerator SetupBattle()
@@ -43,13 +46,14 @@ public class BattleManager : MonoBehaviour
         GameObject playerGO = Instantiate(playerPrefab);
 		playerGO.transform.parent = playerBattleStation;
 		playerUnit = playerGO.GetComponent<Unit>();
+		
 
 		GameObject enemyGO = Instantiate(enemyPrefab);
 		enemyGO.transform.parent = enemyBattleStation;
 		enemyUnit = enemyGO.GetComponent<Unit>();
 
 		dialogueText.text = "A wild " + enemyUnit.unitName + " approaches...";
-
+		
 		playerHUD.SetHUD(playerUnit);
 		enemyHUD.SetHUD(enemyUnit);
 
@@ -61,6 +65,11 @@ public class BattleManager : MonoBehaviour
 	{
 		dialogueText.text = "Ready To Spin!";
 		currentBattleState = BattleState.PLAYERREADY;
+
+		//temporary
+		enemyUnit.damage = 1;
+		enemyUnit.defence = 1;
+		//enemyUnit.activationPool.heal = 1;
 	}
 
 	IEnumerator PlayerAttack()
@@ -74,24 +83,22 @@ public class BattleManager : MonoBehaviour
 		dialogueText.text = "The attack is successful!";
 
 		yield return new WaitForSeconds(2f);
-
-		// if(isDead)
-		// {
-		// 	currentBattleState = BattleState.WON;
-		// 	EndBattle();
-		// }
-
 	}
 
 	IEnumerator EnemyTurn()
 	{
-		dialogueText.text = enemyUnit.unitName + " attacks!";
+		enemyUnit.damage = 1;
+		//enemyUnit.activationPool.heal = 1;
 
-		yield return new WaitForSeconds(1f);
+		dialogueText.text = enemyUnit.unitName + " attacks!";
 
 		bool isDead = playerUnit.TakeDamage(enemyUnit.damage);
 
 		playerHUD.SetHP(playerUnit);
+
+		// yield return new WaitForSeconds(1f);
+
+
 
 		yield return new WaitForSeconds(1f);
 
@@ -162,15 +169,6 @@ public class BattleManager : MonoBehaviour
 		Debug.Log("Attack!");
 	}
 
-	public void Heal()
-	{
-		StartCoroutine(PlayerHeal());
-		Debug.Log("Heal!");
-	}
-	public void Defend() {
-		StartCoroutine(PlayerDefend());
-		Debug.Log("Defend!");
-	}
 	public void StartEnemyTurn() {
 		currentBattleState = BattleState.ENEMYTURN;
 		StartCoroutine(EnemyTurn());

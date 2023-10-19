@@ -26,7 +26,7 @@ public class SlotManager : MonoBehaviour
     public float intervalBetweenEachSlotActivation = 2f;
 
     //선택된 슬롯 아이템
-    public List<SlotItem> selectedSlotItems;
+    //public List<SlotItem> selectedSlotItems;
 
     [SerializeField]
     public Reel[] reels;
@@ -62,13 +62,23 @@ public class SlotManager : MonoBehaviour
     //슬롯 아이템 활성화 코루틴
     private IEnumerator ActivateSlotItems() {
         gameManager.battleManager.currentBattleState = BattleState.PLAYERACTION;
-         foreach (Action action in OnSpinStopped?.GetInvocationList()?? new Delegate[0])
-            {
-                action.Invoke();
-                OnSpinStopped -= action;
-                yield return new WaitForSeconds(intervalBetweenEachSlotActivation);
-            }
+
+        //Obsolete
+        //  foreach (Action action in OnSpinStopped?.GetInvocationList()?? new Delegate[0])
+        //     {
+        //         action.Invoke();
+        //         OnSpinStopped -= action;
+        //         yield return new WaitForSeconds(intervalBetweenEachSlotActivation);
+        //     }
         
+        //temporary
+        if(gameManager.battleManager.playerUnit.damage != 0) {
+            gameManager.battleManager.Attack();
+            yield return new WaitForSeconds(intervalBetweenEachSlotActivation);
+        } 
+
+        gameManager.battleManager.playerHUD.SetHUD(gameManager.battleManager.playerUnit);
+
         if(gameManager.battleManager.enemyUnit.currentHP > 0) {
             gameManager.battleManager.currentBattleState = BattleState.ENEMYTURN;
             gameManager.battleManager.StartEnemyTurn();
@@ -92,8 +102,8 @@ public class SlotManager : MonoBehaviour
             else {
                 StartCoroutine(ActivateSlotItems());
                 spinsLeft = 3;
-                selectedSlotItems.Clear();
-                OnSpinStopped -= OnSpinStopped;
+                //selectedSlotItems.Clear();
+                //OnSpinStopped -= OnSpinStopped;
             }
         }
     }

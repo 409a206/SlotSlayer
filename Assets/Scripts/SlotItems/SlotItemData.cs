@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum ActionType {
-    ATTACK, HEAL, DEFEND
+    INSTANT_ACTIVATION, ACTIVATED_AT_THE_END_OF_TURN
 }
 
 public enum SlotItemAttribute {
@@ -28,7 +28,7 @@ public class SlotItemData : ScriptableObject
     }
 
     public ActionType actionType;
-    public float applyAmount;
+    public int applyAmount;
     public SlotItemAttribute slotItemAttribute;
     public SlotItemSynergyAttribute[] slotItemSynergyAttributes;
     

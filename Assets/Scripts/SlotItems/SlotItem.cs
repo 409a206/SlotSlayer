@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,13 +65,16 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     // }
 
     public void Activate() {
-        switch (slotItemData.actionType)
-        {
-            case ActionType.ATTACK: slotManager.gameManager.battleManager.Attack(); return;
-            case ActionType.DEFEND: slotManager.gameManager.battleManager.Defend(); return;
-            case ActionType.HEAL: slotManager.gameManager.battleManager.Heal(); return;
-            default: return;
-        }
+        // switch (slotItemData.actionType)
+        // {
+        //     case ActionType.ATTACK: slotManager.gameManager.battleManager.Attack(); return;
+        //     case ActionType.DEFEND: slotManager.gameManager.battleManager.Defend(); return;
+        //     case ActionType.HEAL: slotManager.gameManager.battleManager.Heal(); return;
+        //     default: return;
+        // }
+
+        slotManager.gameManager.battleManager.Attack();
+
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -108,21 +112,42 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
             
             if(!isSelected && CalculateYDistFromOriginPos() > 2.0f) {
-                if(slotManager.selectedSlotItems.Count < slotManager.SlotItemsToSelect) {
-                    SlotManager.OnSpinStopped += Activate;
-                    
-                    //나중에 파일 경로및 이름 수정 필요
-                    SlotItem instantiatedSlotItem = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItems/Instantiated SlotItems/" + this.slotItemData.SlotItemName);
-                    
-                    slotManager.selectedSlotItems.Add(instantiatedSlotItem);
-
-                    Debug.Log(slotManager.selectedSlotItems.Count); 
+                    ApplySlotItem();
                     isSelected = !isSelected;
                     _spriteRenderer.color = new Color(originColor.r/255f,originColor.g/255f,originColor.b/255f, 0f);
-                }
+                
+                //if(slotManager.selectedSlotItems.Count < slotManager.SlotItemsToSelect) {
+                    //SlotManager.OnSpinStopped += Activate;
+                    
+
+                    //나중에 파일 경로및 이름 수정 필요
+                    // GameObject instantiatedSlotItem = Resources.Load<GameObject>("Prefabs/Dummy/SlotItems/Instantiated SlotItems/" + this.slotItemData.SlotItemName);
+
+                    // slotManager.selectedSlotItems.Add(instantiatedSlotItem.GetComponent<SlotItem>());
+                    
+
+                    //Debug.Log(slotManager.selectedSlotItems.Count); 
+
+                //}
             } 
             
         }
+    }
+
+    private void ApplySlotItem()
+    {
+        if(slotItemData.SlotItemName == "Attack") {
+            slotManager.gameManager.battleManager.playerUnit.damage += slotItemData.applyAmount;
+            slotManager.gameManager.battleManager.playerHUD.attack_Text.text = 
+            "Attack: " +  slotManager.gameManager.battleManager.playerUnit.damage;
+        }
+        
+        if(slotItemData.SlotItemName == "Defend") {
+            slotManager.gameManager.battleManager.playerUnit.defence += slotItemData.applyAmount;
+            slotManager.gameManager.battleManager.playerHUD.defence_Text.text = 
+                "Defence: " +  slotManager.gameManager.battleManager.playerUnit.defence;
+        }
+
     }
 
     //SlotItem이 슬롯으로부터 얼마나 드래그 되었는지 확인하는 함수.
