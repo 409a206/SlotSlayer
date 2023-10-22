@@ -25,8 +25,8 @@ public class BattleManager : MonoBehaviour
 
 	public GameObject BattleResultPanel;
     
-	public Unit playerUnit;
-	public Unit enemyUnit;
+	public PlayableCharacter playerUnit;
+	public Enemy enemyUnit;
 	
 	[HideInInspector]
 	public GameManager gameManager;
@@ -45,14 +45,14 @@ public class BattleManager : MonoBehaviour
     {
         GameObject playerGO = Instantiate(playerPrefab);
 		playerGO.transform.parent = playerBattleStation;
-		playerUnit = playerGO.GetComponent<Unit>();
+		playerUnit = playerGO.GetComponent<PlayableCharacter>();
 		
 
 		GameObject enemyGO = Instantiate(enemyPrefab);
 		enemyGO.transform.parent = enemyBattleStation;
-		enemyUnit = enemyGO.GetComponent<Unit>();
+		enemyUnit = enemyGO.GetComponent<Enemy>();
 
-		dialogueText.text = "A wild " + enemyUnit.unitName + " approaches...";
+		dialogueText.text = enemyUnit.unitName + " approaches! Beware!";
 		
 		playerHUD.SetHUD(playerUnit);
 		enemyHUD.SetHUD(enemyUnit);
@@ -65,11 +65,10 @@ public class BattleManager : MonoBehaviour
 	{
 		dialogueText.text = "Ready To Spin!";
 		currentBattleState = BattleState.PLAYERREADY;
-
-		//temporary
-		enemyUnit.damage = 1;
-		enemyUnit.defence = 1;
-		//enemyUnit.activationPool.heal = 1;
+		playerUnit.damage = 0;
+		playerUnit.defence = 0;
+		playerUnit.IsControllable = true;
+		playerHUD.SetHUD(playerUnit);
 	}
 
 	IEnumerator PlayerAttack()
@@ -87,7 +86,7 @@ public class BattleManager : MonoBehaviour
 
 	IEnumerator EnemyTurn()
 	{
-		enemyUnit.damage = 1;
+		enemyUnit.damage = 30;
 		//enemyUnit.activationPool.heal = 1;
 
 		dialogueText.text = enemyUnit.unitName + " attacks!";

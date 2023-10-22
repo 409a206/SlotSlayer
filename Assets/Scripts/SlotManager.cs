@@ -62,7 +62,7 @@ public class SlotManager : MonoBehaviour
     //슬롯 아이템 활성화 코루틴
     private IEnumerator ActivateSlotItems() {
         gameManager.battleManager.currentBattleState = BattleState.PLAYERACTION;
-
+        yield return null;
         //Obsolete
         //  foreach (Action action in OnSpinStopped?.GetInvocationList()?? new Delegate[0])
         //     {
@@ -72,10 +72,11 @@ public class SlotManager : MonoBehaviour
         //     }
         
         //temporary
-        if(gameManager.battleManager.playerUnit.damage != 0) {
-            gameManager.battleManager.Attack();
-            yield return new WaitForSeconds(intervalBetweenEachSlotActivation);
-        } 
+        
+        // if(gameManager.battleManager.playerUnit.damage != 0) {
+        //     gameManager.battleManager.Attack();
+        //     yield return new WaitForSeconds(intervalBetweenEachSlotActivation);
+        // } 
 
         gameManager.battleManager.playerHUD.SetHUD(gameManager.battleManager.playerUnit);
 
@@ -86,6 +87,7 @@ public class SlotManager : MonoBehaviour
             gameManager.battleManager.currentBattleState = BattleState.WON;
             gameManager.battleManager.EndBattle();
         }
+        
     }
 
     public void Spin() {

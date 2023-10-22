@@ -19,10 +19,4 @@ public class GameManager : MonoBehaviour
         soundManager = FindObjectOfType<SoundManager>();
         actionOnTimer = GetComponent<ActionOnTimer>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
