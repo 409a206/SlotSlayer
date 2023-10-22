@@ -26,7 +26,7 @@ public class SlotManager : MonoBehaviour
     public float intervalBetweenEachSlotActivation = 2f;
 
     //선택된 슬롯 아이템
-    //public List<SlotItem> selectedSlotItems;
+    public List<SlotItem> selectedSlotItems;
 
     [SerializeField]
     public Reel[] reels;

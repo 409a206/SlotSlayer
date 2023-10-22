@@ -44,11 +44,14 @@ public class PlayableCharacter : Unit
     private void OnMouseUp() {
         if(reticleGo != null) {
             Debug.Log("OnMouseUp Called");
+
             attackTarget = reticleGo.GetComponent<Reticle>().target;
 
-            battleManager.Attack();
+            if(attackTarget != null) {
+                battleManager.Attack();
+                isControllable = false;
+            }
 
-            isControllable = false;
             Destroy(reticleGo);
         }
     }

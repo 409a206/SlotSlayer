@@ -64,6 +64,7 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     //     }
     // }
 
+    //Obsolete
     public void Activate() {
         // switch (slotItemData.actionType)
         // {
@@ -111,7 +112,14 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             this._spriteRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
 
             
-            if(!isSelected && CalculateYDistFromOriginPos() > 2.0f) {
+            if(!isSelected && CalculateYDistFromOriginPos() > 2.0f && slotManager.selectedSlotItems.Count < slotManager.SlotItemsToSelect) {
+                 //나중에 파일 경로및 이름 수정 필요
+                    GameObject instantiatedSlotItem = Resources.Load<GameObject>("Prefabs/Dummy/SlotItems/Instantiated SlotItems/" + this.slotItemData.SlotItemName);
+
+                    slotManager.selectedSlotItems.Add(instantiatedSlotItem.GetComponent<SlotItem>());
+
+                    Debug.Log(slotManager.selectedSlotItems.Count); 
+
                     ApplySlotItem();
                     isSelected = !isSelected;
                     _spriteRenderer.color = new Color(originColor.r/255f,originColor.g/255f,originColor.b/255f, 0f);
@@ -148,6 +156,10 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 "Defence: " +  slotManager.gameManager.battleManager.playerUnit.defence;
         }
 
+        if(slotItemData.SlotItemName == "Heal") {
+            slotManager.gameManager.battleManager.playerUnit.Heal(slotItemData.applyAmount);
+            slotManager.gameManager.battleManager.playerHUD.SetHP(slotManager.gameManager.battleManager.playerUnit);
+        }
     }
 
     //SlotItem이 슬롯으로부터 얼마나 드래그 되었는지 확인하는 함수.

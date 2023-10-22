@@ -65,6 +65,9 @@ public class BattleManager : MonoBehaviour
 	{
 		dialogueText.text = "Ready To Spin!";
 		currentBattleState = BattleState.PLAYERREADY;
+
+		gameManager.slotManager.selectedSlotItems.Clear();
+
 		playerUnit.damage = 0;
 		playerUnit.defence = 0;
 		playerUnit.IsControllable = true;
