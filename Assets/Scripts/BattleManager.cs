@@ -14,9 +14,9 @@ public class BattleManager : MonoBehaviour
     
 	public GameObject playerPrefab;
 	public GameObject enemyPrefab;
-	public GameObject battleStateCanvas;
-
+	[HideInInspector]
 	public BattleHUD playerHUD;
+	[HideInInspector]
 	public BattleHUD enemyHUD;
 	public Transform playerBattleStation;
 	public Transform enemyBattleStation;
@@ -31,9 +31,7 @@ public class BattleManager : MonoBehaviour
 	[HideInInspector]
 	public GameManager gameManager;
 
-
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
 		gameManager = FindObjectOfType<GameManager>();
         currentBattleState = BattleState.START;
@@ -44,18 +42,20 @@ public class BattleManager : MonoBehaviour
     IEnumerator SetupBattle()
     {
         GameObject playerGO = Instantiate(playerPrefab);
+		playerHUD = playerGO.GetComponentInChildren<BattleHUD>();
 		playerGO.transform.parent = playerBattleStation;
 		playerUnit = playerGO.GetComponent<PlayableCharacter>();
 		
 
 		GameObject enemyGO = Instantiate(enemyPrefab);
+		enemyHUD = enemyGO.GetComponentInChildren<BattleHUD>();
 		enemyGO.transform.parent = enemyBattleStation;
 		enemyUnit = enemyGO.GetComponent<Enemy>();
-
-		dialogueText.text = enemyUnit.unitName + " approaches! Beware!";
 		
 		playerHUD.SetHUD(playerUnit);
 		enemyHUD.SetHUD(enemyUnit);
+
+		dialogueText.text = enemyUnit.unitName + " approaches! Beware!";
 
 		yield return new WaitForSeconds(2f);
 
@@ -118,14 +118,6 @@ public class BattleManager : MonoBehaviour
 
 	public void EndBattle()
 	{
-		if(currentBattleState == BattleState.WON)
-		{
-			//dialogueText.text = "You won the battle!";
-		} else if (currentBattleState == BattleState.LOST)
-		{
-			//dialogueText.text = "You were defeated.";
-		}
-
 		OpenBattleResultWindow(currentBattleState);
 	}
 
@@ -148,8 +140,6 @@ public class BattleManager : MonoBehaviour
 
 		yield return new WaitForSeconds(2f);
 
-		//state = BattleState.ENEMYTURN;
-		//StartCoroutine(EnemyTurn());
 	}
 	IEnumerator PlayerDefend()
 	{
@@ -157,8 +147,6 @@ public class BattleManager : MonoBehaviour
 
 		yield return new WaitForSeconds(2f);
 
-		//state = BattleState.ENEMYTURN;
-		//StartCoroutine(EnemyTurn());
 	}
 	public void SlotItemSelection() {
 		dialogueText.text = "Select Slot Items";

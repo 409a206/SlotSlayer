@@ -7,7 +7,6 @@ public class PlayableCharacter : Unit
 {
 
     private bool isControllable = false;
-
     public bool IsControllable 
     {
         get 
