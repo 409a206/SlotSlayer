@@ -155,8 +155,13 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             slotManager.gameManager.battleManager.playerHUD.defence_Text.text = 
                 "Defence: " +  slotManager.gameManager.battleManager.playerUnit.defence;
         }
-
+        
         if(slotItemData.SlotItemName == "Heal") {
+            slotManager.gameManager.battleManager.playerUnit.Heal(slotItemData.applyAmount);
+            slotManager.gameManager.battleManager.playerHUD.SetHP(slotManager.gameManager.battleManager.playerUnit);
+        }
+
+        if(slotItemData.SlotItemName == "Stab") {
             slotManager.gameManager.battleManager.playerUnit.Heal(slotItemData.applyAmount);
             slotManager.gameManager.battleManager.playerHUD.SetHP(slotManager.gameManager.battleManager.playerUnit);
         }

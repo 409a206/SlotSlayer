@@ -57,10 +57,14 @@ public class Reel : MonoBehaviour
       
         SlotItem attack = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItems/Attack");
         attack.slotItemData = Resources.Load<SlotItemData>("Scriptable Objects/Dummy/Attack");
+
+        SlotItem stab = Resources.Load<SlotItem>("Prefabs/Dummy/SlotItems/Stab");
+        stab.slotItemData = Resources.Load<SlotItemData>("Scriptable Objects/Dummy/Stab");
         
         slotItems.Add(defend);
         slotItems.Add(heal);
         slotItems.Add(attack);
+        slotItems.Add(stab);
         // slotItems.Add(Resources.Load<SlotItem>("Prefabs/Dummy/SlotItem"));
         // slotItems.Add(Resources.Load<SlotItem>("Prefabs/Dummy/SlotItem"));
         // slotItems.Add(Resources.Load<SlotItem>("Prefabs/Dummy/SlotItem"));

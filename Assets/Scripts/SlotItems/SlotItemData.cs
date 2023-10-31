@@ -33,7 +33,7 @@ public class SlotItemData : ScriptableObject
     public SlotItemSynergyAttribute[] slotItemSynergyAttributes;
     
     [SerializeField]
-    private string code;
+    public string code;
     
     [SerializeField]
     AudioClip stopSound;

@@ -21,12 +21,18 @@ public class SlotManager : MonoBehaviour
         set {slotItemsToSelect = value;}
     }
 
+    [SerializeField]
+    [Tooltip("보유 코인 수")]
+    private int coinsLeft = 5;
+
     [Tooltip("각 슬롯 활성화 사이의 간격(초)")]
     [SerializeField]
     public float intervalBetweenEachSlotActivation = 2f;
 
     //선택된 슬롯 아이템
     public List<SlotItem> selectedSlotItems;
+    //보유중인 슬롯 아이템
+    public List<SlotItem> slotItemsInPossession;
 
     [SerializeField]
     public Reel[] reels;

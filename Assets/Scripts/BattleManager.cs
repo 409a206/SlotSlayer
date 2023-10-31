@@ -44,19 +44,21 @@ public class BattleManager : MonoBehaviour
         GameObject playerGO = Instantiate(playerPrefab);
 		playerHUD = playerGO.GetComponentInChildren<BattleHUD>();
 		playerGO.transform.parent = playerBattleStation;
+		playerGO.transform.localPosition = Vector3.zero;
 		playerUnit = playerGO.GetComponent<PlayableCharacter>();
 		
 
 		GameObject enemyGO = Instantiate(enemyPrefab);
 		enemyHUD = enemyGO.GetComponentInChildren<BattleHUD>();
 		enemyGO.transform.parent = enemyBattleStation;
+		enemyGO.transform.localPosition = Vector3.zero;
 		enemyUnit = enemyGO.GetComponent<Enemy>();
 		
 		playerHUD.SetHUD(playerUnit);
 		enemyHUD.SetHUD(enemyUnit);
 
 		dialogueText.text = enemyUnit.unitName + " approaches! Beware!";
-
+		
 		yield return new WaitForSeconds(2f);
 
 		PlayerTurn();
