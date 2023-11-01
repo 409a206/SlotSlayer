@@ -35,6 +35,8 @@ public class SlotItemData : ScriptableObject
 
     public int applyAmount;
     public int cost;
+    [TextArea]
+    public string description;
     public TargetType targetType;
     public ActionType actionType;
     public SlotItemAttribute slotItemAttribute;

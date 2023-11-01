@@ -10,9 +10,9 @@ public class SlotManager : MonoBehaviour
     public static event Action OnSpinButtonClicked;
     public static event Action OnSpinStopped;
 
-    [SerializeField]
-    [Tooltip("남은 스핀 횟수")]
-    private int spinsLeft = 3;
+    // [SerializeField]
+    // [Tooltip("남은 스핀 횟수")]
+    // private int spinsLeft = 3;
 
     [SerializeField]
     [Tooltip("선택할 수 있는 총 슬롯 아이템 갯수")]
@@ -41,6 +41,7 @@ public class SlotManager : MonoBehaviour
     public TMPro.TMP_Text coinCountText;
     [SerializeField]
     public Button spinButton;
+    public SlotItemInfoPanel slotItemInfoPanel;
 
     private bool resultsChecked = true;
 
@@ -104,22 +105,29 @@ public class SlotManager : MonoBehaviour
     public void Spin() {
         if(reels[0].reelStopped && reels[1].reelStopped && reels[2].reelStopped 
            && (gameManager.battleManager.currentBattleState == BattleState.PLAYERREADY || gameManager.battleManager.currentBattleState == BattleState.SPINPAUSE)) {
+            
             //만약 남은 스핀 횟수가 0보다 크다면 스핀하는 로직
-            if(spinsLeft > 0) {
-                coinsLeft--;
+            if(coinsLeft > 0) {
+                SetCoinCount(--coinsLeft);
                 Debug.Log("coinsLeft: " + coinsLeft);
-                spinsLeft--;
-                Debug.Log("spins left: " + spinsLeft);
+                // spinsLeft--;
+                // Debug.Log("spins left: " + spinsLeft);
                 gameManager.battleManager.currentBattleState = BattleState.SPINNING;
                 OnSpinButtonClicked?.Invoke();
             } 
+
             //만약 남은 스핀 횟수가 0이라면 선택된 슬롯 아이템 활성화 로직
             else {
                 StartCoroutine(ActivateSlotItems());
-                spinsLeft = 3;
+                //spinsLeft = 3;
                 //selectedSlotItems.Clear();
                 //OnSpinStopped -= OnSpinStopped;
             }
         }
+    }
+
+    public void SetCoinCount(int coinsLeft) {
+        this.coinsLeft = coinsLeft;
+        coinCountText.text = "Coins: " + coinsLeft.ToString();
     }
 }

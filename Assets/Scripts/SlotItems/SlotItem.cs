@@ -91,11 +91,11 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     {
         if(slotManager.gameManager.battleManager.currentBattleState == BattleState.SPINPAUSE) {
             originPos = this.transform.position;
-            if(this.transform.position == this.transform.parent.gameObject.transform.position) {
-                isOnCorrespondingSlot = true;
-            } else {
-                isOnCorrespondingSlot = false;
-            }
+            // if(this.transform.position == this.transform.parent.gameObject.transform.position) {
+            //     isOnCorrespondingSlot = true;
+            // } else {
+            //     isOnCorrespondingSlot = false;
+            // }
         }
     }
 
@@ -121,11 +121,12 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                     Debug.Log(slotManager.selectedSlotItems.Count); 
 
                     //코인 차감
-                    slotManager.coinsLeft -= this.slotItemData.cost;
+                    slotManager.SetCoinCount(slotManager.coinsLeft - this.slotItemData.cost);
                     Debug.Log("slotManager.coinsLeft: " + slotManager.coinsLeft);
 
                     ApplySlotItem();
                     isSelected = !isSelected;
+                    _boxCollider2D.enabled = false;
                     _spriteRenderer.color = new Color(originColor.r/255f,originColor.g/255f,originColor.b/255f, 0f);
                 
                 //if(slotManager.selectedSlotItems.Count < slotManager.SlotItemsToSelect) {
@@ -186,5 +187,38 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         Debug.Log("yDistFromOriginPos: " + yDistFromOriginPos);
 
         return yDistFromOriginPos;
+    }
+
+    private void OnMouseEnter() {
+        if(isOnCorrespondingSlot) {
+            // Debug.Log("MouseEntered");
+            ToggleInfoPanel(true);
+        }
+    }
+
+    private void OnMouseExit() {
+        if(isOnCorrespondingSlot) {
+            //Debug.Log("MouseExited");
+            ToggleInfoPanel(false);
+        }
+    }
+
+    private void ToggleInfoPanel(bool isMouseHovering)
+    {
+        if(isMouseHovering) {
+            slotManager.slotItemInfoPanel.Show(this.slotItemData);
+            Debug.Log("Toggle On");
+        } else {
+            slotManager.slotItemInfoPanel.UnShow();
+            Debug.Log("Toggle Off");
+        }
+    }
+
+    public void CheckIfSlotItemIsOnCorrespondingSlot() {
+        if(transform.localPosition == Vector3.zero) {
+            isOnCorrespondingSlot = true;
+        } else {
+            isOnCorrespondingSlot = false;
+        }
     }
 }

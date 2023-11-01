@@ -66,6 +66,7 @@ public class BattleManager : MonoBehaviour
 	void PlayerTurn()
 	{
 		dialogueText.text = "Ready To Spin!";
+		gameManager.slotManager.SetCoinCount(10);
 		currentBattleState = BattleState.PLAYERREADY;
 
 		gameManager.slotManager.selectedSlotItems.Clear();
@@ -91,6 +92,8 @@ public class BattleManager : MonoBehaviour
 
 	IEnumerator EnemyTurn()
 	{
+		gameManager.slotManager.SetCoinCount(0);
+
 		enemyUnit.damage = 30;
 		//enemyUnit.activationPool.heal = 1;
 
@@ -104,7 +107,7 @@ public class BattleManager : MonoBehaviour
 
 
 
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(2.0f);
 
 		if(isDead)
 		{
@@ -153,6 +156,14 @@ public class BattleManager : MonoBehaviour
 	public void SlotItemSelection() {
 		dialogueText.text = "Select Slot Items";
 		currentBattleState = BattleState.SPINPAUSE;
+
+		for (int i = 0; i < gameManager.slotManager.reels.Length; i++)
+		{
+			for (int j = 0; j < gameManager.slotManager.reels[i].slotItems.Count; j++)
+			{
+				gameManager.slotManager.reels[i].slotItems[j].CheckIfSlotItemIsOnCorrespondingSlot();
+			}
+		}
 	}
 
 	public void Attack()

@@ -37,7 +37,7 @@ public class Reel : MonoBehaviour
     private GameObject correspondingSlot;
     //릴에 할당되어있는 슬롯 아이템의 리스트
     [SerializeField]
-    private List<SlotItem> slotItems;
+    public List<SlotItem> slotItems;
 
     void Start()
     {
