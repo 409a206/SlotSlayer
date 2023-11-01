@@ -14,6 +14,9 @@ public enum SlotItemAttribute {
 public enum SlotItemSynergyAttribute {
     ATTACK, DARKMAGIC, WHITEMAGIC
 }
+public enum TargetType {
+    GLOBAL, PLAYER, ENEMYSINGLE
+}
 
 [System.Serializable]
 [CreateAssetMenu(fileName = "Slot Item", menuName = "Scriptable Object/Slot Item Data", order = int.MaxValue)]
@@ -26,23 +29,18 @@ public class SlotItemData : ScriptableObject
         get {return slotItemName;}
         set {slotItemName = value;}
     }
+    
+    [SerializeField]
+    public string code;
 
-    public ActionType actionType;
     public int applyAmount;
+    public int cost;
+    public TargetType targetType;
+    public ActionType actionType;
     public SlotItemAttribute slotItemAttribute;
     public SlotItemSynergyAttribute[] slotItemSynergyAttributes;
     
     [SerializeField]
-    public string code;
-    
-    [SerializeField]
     AudioClip stopSound;
 
-    //컴포넌트 변수
-    private BoxCollider2D _boxCollider2D;
-    private SpriteRenderer _spriteRenderer;
-    private Color originColor;
-
-    //레퍼런스 변수
-    protected SlotManager slotManager;
 }

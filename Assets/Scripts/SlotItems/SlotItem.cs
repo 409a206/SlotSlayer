@@ -120,6 +120,10 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
                     Debug.Log(slotManager.selectedSlotItems.Count); 
 
+                    //코인 차감
+                    slotManager.coinsLeft -= this.slotItemData.cost;
+                    Debug.Log("slotManager.coinsLeft: " + slotManager.coinsLeft);
+
                     ApplySlotItem();
                     isSelected = !isSelected;
                     _spriteRenderer.color = new Color(originColor.r/255f,originColor.g/255f,originColor.b/255f, 0f);
@@ -144,26 +148,32 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     private void ApplySlotItem()
     {
-        if(slotItemData.SlotItemName == "Attack") {
-            slotManager.gameManager.battleManager.playerUnit.damage += slotItemData.applyAmount;
-            slotManager.gameManager.battleManager.playerHUD.attack_Text.text = 
-            "Attack: " +  slotManager.gameManager.battleManager.playerUnit.damage;
-        }
-        
-        if(slotItemData.SlotItemName == "Defend") {
-            slotManager.gameManager.battleManager.playerUnit.defence += slotItemData.applyAmount;
-            slotManager.gameManager.battleManager.playerHUD.defence_Text.text = 
+        switch (slotItemData.SlotItemName)
+        {
+            case "Attack" :
+                slotManager.gameManager.battleManager.playerUnit.damage += slotItemData.applyAmount;
+                slotManager.gameManager.battleManager.playerHUD.attack_Text.text = 
+                "Attack: " +  slotManager.gameManager.battleManager.playerUnit.damage;
+                break;
+            
+            case "Defend" : 
+                slotManager.gameManager.battleManager.playerUnit.defence += slotItemData.applyAmount;
+                slotManager.gameManager.battleManager.playerHUD.defence_Text.text = 
                 "Defence: " +  slotManager.gameManager.battleManager.playerUnit.defence;
-        }
-        
-        if(slotItemData.SlotItemName == "Heal") {
-            slotManager.gameManager.battleManager.playerUnit.Heal(slotItemData.applyAmount);
-            slotManager.gameManager.battleManager.playerHUD.SetHP(slotManager.gameManager.battleManager.playerUnit);
-        }
+                break;
+            
+            case "Heal" : 
+                slotManager.gameManager.battleManager.playerUnit.Heal(slotItemData.applyAmount);
+                slotManager.gameManager.battleManager.playerHUD.SetHP(slotManager.gameManager.battleManager.playerUnit);
+                break;
+            
+            case "Stab" : 
+                slotManager.gameManager.battleManager.Attack();
+                break;
 
-        if(slotItemData.SlotItemName == "Stab") {
-            slotManager.gameManager.battleManager.playerUnit.Heal(slotItemData.applyAmount);
-            slotManager.gameManager.battleManager.playerHUD.SetHP(slotManager.gameManager.battleManager.playerUnit);
+            default: 
+                Debug.LogError("slotItem name not applicable");
+                break;
         }
     }
 

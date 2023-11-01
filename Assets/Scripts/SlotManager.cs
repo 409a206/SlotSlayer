@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using System.Threading;
 
 public class SlotManager : MonoBehaviour
 {
@@ -23,11 +24,11 @@ public class SlotManager : MonoBehaviour
 
     [SerializeField]
     [Tooltip("보유 코인 수")]
-    private int coinsLeft = 5;
+    public int coinsLeft = 10;
 
-    [Tooltip("각 슬롯 활성화 사이의 간격(초)")]
-    [SerializeField]
-    public float intervalBetweenEachSlotActivation = 2f;
+    // [Tooltip("각 슬롯 활성화 사이의 간격(초)")]
+    // [SerializeField]
+    // public float intervalBetweenEachSlotActivation = 2f;
 
     //선택된 슬롯 아이템
     public List<SlotItem> selectedSlotItems;
@@ -36,6 +37,10 @@ public class SlotManager : MonoBehaviour
 
     [SerializeField]
     public Reel[] reels;
+    [SerializeField]
+    public TMPro.TMP_Text coinCountText;
+    [SerializeField]
+    public Button spinButton;
 
     private bool resultsChecked = true;
 
@@ -101,6 +106,8 @@ public class SlotManager : MonoBehaviour
            && (gameManager.battleManager.currentBattleState == BattleState.PLAYERREADY || gameManager.battleManager.currentBattleState == BattleState.SPINPAUSE)) {
             //만약 남은 스핀 횟수가 0보다 크다면 스핀하는 로직
             if(spinsLeft > 0) {
+                coinsLeft--;
+                Debug.Log("coinsLeft: " + coinsLeft);
                 spinsLeft--;
                 Debug.Log("spins left: " + spinsLeft);
                 gameManager.battleManager.currentBattleState = BattleState.SPINNING;
