@@ -149,6 +149,7 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     private void ApplySlotItem()
     {
+        //추후 name 대신 code로 바꾸기
         switch (slotItemData.SlotItemName)
         {
             case "Attack" :
@@ -217,8 +218,10 @@ public class SlotItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     public void CheckIfSlotItemIsOnCorrespondingSlot() {
         if(transform.localPosition == Vector3.zero) {
             isOnCorrespondingSlot = true;
+            Debug.Log(slotItemData.SlotItemName + " is on slot.");
         } else {
             isOnCorrespondingSlot = false;
+            Debug.Log(slotItemData.SlotItemName + " is not on slot.");
         }
     }
 }

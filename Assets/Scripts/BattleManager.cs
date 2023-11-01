@@ -158,11 +158,8 @@ public class BattleManager : MonoBehaviour
 		currentBattleState = BattleState.SPINPAUSE;
 
 		for (int i = 0; i < gameManager.slotManager.reels.Length; i++)
-		{
-			for (int j = 0; j < gameManager.slotManager.reels[i].slotItems.Count; j++)
-			{
-				gameManager.slotManager.reels[i].slotItems[j].CheckIfSlotItemIsOnCorrespondingSlot();
-			}
+		{	
+				gameManager.slotManager.reels[i].CalculateStoppedRow().CheckIfSlotItemIsOnCorrespondingSlot();	
 		}
 	}
 

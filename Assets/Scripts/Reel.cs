@@ -35,6 +35,7 @@ public class Reel : MonoBehaviour
     //corresponding empty slot
     [SerializeField]
     private GameObject correspondingSlot;
+
     //릴에 할당되어있는 슬롯 아이템의 리스트
     [SerializeField]
     public List<SlotItem> slotItems;
@@ -146,7 +147,7 @@ public class Reel : MonoBehaviour
     }
 
     //정지한 행(SlotItem) 구하기
-    private SlotItem CalculateStoppedRow() {
+    public SlotItem CalculateStoppedRow() {
 
         SlotItem stoppedSlotItem = GetComponentsInChildren<SlotItem>()[0];
 
